@@ -1,12 +1,15 @@
 package app;
 
 import service.Registration;
+import vo.Member;
 
 import java.util.Scanner;
 
 public class Minstco {
+
     public static void main(String[] args){
         Registration registration = new Registration();
+        boolean check = true;
 
         System.out.println("choose number "+"\n"+"1. registration 2. login 3. logout");
         Scanner scanner = new Scanner(System.in);
@@ -25,14 +28,9 @@ public class Minstco {
                 break;
 
             case 2 :
-                System.out.println("This is the login screen");
-                System.out.println("write your ID");
-                scanner.nextLine();
-                String id =scanner.nextLine();
-                System.out.println("write your pw");
-                String password = scanner.nextLine();
-                registration.loginMember(id,password);
+                registration.loginMember();
 
         }
+
     }
 }

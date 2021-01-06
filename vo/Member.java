@@ -23,6 +23,9 @@ public Member(String id , String password, String name , String email, String ph
 
     System.out.println("member : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total);
 }
+public String getInfo(){
+    return "member infomation : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total;
+}
 
 
 
