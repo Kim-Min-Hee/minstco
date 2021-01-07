@@ -9,16 +9,18 @@ import java.util.Scanner;
 public class Registration {
     private static final char[] Registration = null;
     private static final String Member = null;
-    ArrayList<Member> profile = new ArrayList<Member>();
+    public ArrayList<Member> profile = new ArrayList<Member>();
     Scanner scanner = new Scanner(System.in);
-
 
     public Registration() {
         Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415", "F", 'A', 0);
         Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812", "M", 'D', 0);
+        Member m3 = new Member("q","q","q","xldkah@naver.com","11111111111","F",'B',0);
         profile.add(m1);
         profile.add(m2);
+        profile.add(m3);
     }
+
 
     public void insertMember() {
         System.out.println("please enter id to use");
@@ -85,56 +87,66 @@ public class Registration {
         Member member = new Member(id, password, name, email, phoneNumber, gender, 'C', 0);
         profile.add(member);
 
-
     }
-
-    public void loginMember() {
-        System.out.println("This is the login screen");
-        System.out.println("write your ID");
-        String id = scanner.nextLine();
-        System.out.println("write your password");
-        String password = scanner.nextLine();
-        for (int i=0; i<profile.size();i++) {
-            Member m = profile.get(i);
-            if (m.getId().equals(id)) {
-                System.out.println("???");
-                if (m.getPassword().equals(password)) {
-                    System.out.println("login OK");
-                    break;
-                } else {
-                    rePassword();
-                }
-                break;
-            } else {
-                System.out.println("Id does not match");
-                if (m.getPassword().equals(password)) {
-                    System.out.println("passwords match");
-                } else {
-                    System.out.println("Passwords do not match");
-                }
-
-            }
+    public void selectAllMember(){
+        System.out.println("show member list");
+        for(int i = 0;i<profile.size();i++){
+            System.out.println(profile.get(i).getInfo());
         }
     }
 
-    public void rePassword() {
-        for (int i = 0; i < 4; i++) {
-            System.out.println("Passwords do not match");
-            System.out.println("Please re-enter your password");
-            String password = scanner.nextLine();
-            for (int y=0; y<profile.size();y++) {
-                Member m = profile.get(y);
-                if (m.getPassword().equals(password)) {
-                    System.out.println("login OK");
-                    break;
-                } else {
-                    if(i==3){
+    public void loginMember() {
+//        System.out.println("This is the login screen");
+//        System.out.println("write your ID");
+//        Scanner scanner = new Scanner(System.in);
+//        String id = scanner.nextLine();
+//        System.out.println("write your password");
+//        String password = scanner.nextLine();
+//        int result=0;
+//        int result1=0;
+//        for(Member m : profile){
+//            if(m.getId().equals(id)){
+//                if(m.getPassword().equals(password)){
+//                    System.out.println("login OK");
+//                    LoginUser loginUser = new LoginUser(m.getId(),m.getPassword(),m.getName(),m.getEmail(),m.getPhoneNumber(),m.getGender(),m.getGrade(),m.getTotal());
+//                    return ;
+//                }else {
+//                    result++;
+//                }
+//            }else {
+//                result1++;
+//            }
+//        }
+//        if(result<profile.size()){
+//            reLogin(1,id);
+//        }else if(result1<profile.size()){
+//            reLogin(2,id);
+//        }
+
+    }
+
+    public void reLogin(int number,String id) {
+        switch (number){
+            case 1 :
+                for(int i=0 ; i<3 ; i++){
+                    System.out.println("Passwords do not match"+"\n"+"Please re-enter your password");
+                    String password = scanner.nextLine();
+
+                    for(Member m : profile){
+                        if(m.getPassword().equals(password) && m.getId().equals(id)){
+                            System.out.println("login OK");
+                            break;
+                        }
+                    }
+                    if(i==2){
                         System.out.println("Passwords do not match");
                         realignment();
                     }
-                    i++;
                 }
-            }
+                break;
+            case 2 :
+                realignment();
+                break;
 
         }
     }
@@ -158,7 +170,7 @@ public class Registration {
                     System.out.println("reset your password ");
                 case 2:
                     System.out.println("write your Id ");
-                    scanner.nextLine();
+                    Scanner scanner = new Scanner(System.in);
                     id = scanner.nextLine();
                     System.out.println("write your email");
                     String email = scanner.nextLine();
@@ -176,7 +188,10 @@ public class Registration {
                                         gender,profile.get(i).getGrade(),profile.get(i).getTotal());
                                 profile.add(member);
                                 profile.remove(i);
-                                System.out.println(profile);
+                                if(member.getGrade()=='D'){
+                                    System.out.println("a member who has withdrawn");
+                                    return;
+                                }
                                 loginMember();
                                 break;
                             }else{
@@ -186,6 +201,7 @@ public class Registration {
 
                         }
                     }
+                    break;
             }
         }
 
