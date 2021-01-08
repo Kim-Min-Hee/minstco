@@ -1,6 +1,6 @@
 package vo;
 
-public class LoginUser {
+public class User {
     private String id;
     private String password;
     private String name;
@@ -12,10 +12,10 @@ public class LoginUser {
     private int total;
 
     public String UserInfo(){
-        return "User infomation : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total;
+        return "User infomation : "+id+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total;
     }
 
-    public LoginUser(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total){
+    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total){
         this.id = id;
         this.password = password;
         this.name=name;
@@ -27,6 +27,7 @@ public class LoginUser {
 
         System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total);
     }
+
 
     public void setId(String id) {
         this.id = id;

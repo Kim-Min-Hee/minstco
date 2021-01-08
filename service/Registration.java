@@ -16,9 +16,11 @@ public class Registration {
         Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415", "F", 'A', 0);
         Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812", "M", 'D', 0);
         Member m3 = new Member("q","q","q","xldkah@naver.com","11111111111","F",'B',0);
+        Member m4 = new Member("admin","admin","admin","admin@google.com","1234567890","F",'A',100000);
         profile.add(m1);
         profile.add(m2);
         profile.add(m3);
+        profile.add(m4);
     }
 
 
