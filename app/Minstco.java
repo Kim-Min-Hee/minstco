@@ -13,9 +13,9 @@ public class Minstco {
     public static void main(String[] args) {
         Registration registration = new Registration();
         LoginStatus loginUser = new LoginStatus();
-        loginUser.isLogin();
         while (true) {
-            if(loginUser.isLogin()==false){
+            System.out.println("111");
+            if(!loginUser.isLogin()){
                 System.out.println("choose number " + "\n" + "1. registration 2. login ");
                 Scanner scanner = new Scanner(System.in);
                 int choose = scanner.nextInt();
@@ -31,42 +31,9 @@ public class Minstco {
                         break;
 
                     case 2:
-                        System.out.println("This is the login screen");
-                        System.out.println("write your ID");
-                        scanner.nextLine();
-                        String id = scanner.nextLine();
-                        System.out.println("write your password");
-                        String password = scanner.nextLine();
-                        int result = 0;
-                        int result1 = 0;
-                        for (Member m : registration.profile) {
-                            if (m.getId().equals(id)) {
-                                if (m.getPassword().equals(password)) {
-                                    System.out.println("login OK");
-                                    String userid = m.getId();
-                                    String userPassword = m.getPassword();
-                                    String userName = m.getName();
-                                    String userEmail = m.getEmail();
-                                    String userPhoneNumber = m.getPhoneNumber();
-                                    String userGender = m.getGender();
-                                    char userGrade = m.getGrade();
-                                    int userTotal = m.getTotal();
-                                    User consumer = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
-                                    loginUser.login(consumer);
-                                    return;
-                                } else {
-                                    result++;
-                                }
-                            } else {
-                                result1++;
-                            }
-                        }
-                        if (result < registration.profile.size()) {
-                            registration.reLogin(1, id);
-                        } else if (result1 < registration.profile.size()) {
-                            registration.reLogin(2, id);
-                        }
-                        break;
+                    registration.tryLogin();
+
+
                 }
 
             }else {

@@ -15,6 +15,7 @@ public class LoginStatus {
     public void login (User consumer){
         System.out.println("welcome "+"\t"+consumer.getId());
         this.consumer = consumer;
+
         if(consumer.getGrade()=='D'){
             System.out.println("a member who has withdrawn");
         }
@@ -22,13 +23,14 @@ public class LoginStatus {
     }
 
     public boolean isLogin(){
-        System.out.println(consumer);
+        System.out.println("@@");
         boolean check = false;
         if(this.consumer !=null){
             check = true;
         }else{
             check = false;
         }
+        System.out.println(check);
         return check;
     }
 

@@ -2,6 +2,7 @@ package service;
 
 import app.Minstco;
 import vo.Member;
+import vo.User;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,7 +12,8 @@ public class Registration {
     private static final String Member = null;
     public ArrayList<Member> profile = new ArrayList<Member>();
     Scanner scanner = new Scanner(System.in);
-
+    LoginStatus loginUser = new LoginStatus();
+    Minstco minstco = new Minstco();
     public Registration() {
         Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415", "F", 'A', 0);
         Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812", "M", 'D', 0);
@@ -97,64 +99,41 @@ public class Registration {
         }
     }
 
-    public void loginMember() {
-//        System.out.println("This is the login screen");
-//        System.out.println("write your ID");
-//        Scanner scanner = new Scanner(System.in);
-//        String id = scanner.nextLine();
-//        System.out.println("write your password");
-//        String password = scanner.nextLine();
-//        int result=0;
-//        int result1=0;
-//        for(Member m : profile){
-//            if(m.getId().equals(id)){
-//                if(m.getPassword().equals(password)){
-//                    System.out.println("login OK");
-//                    LoginUser loginUser = new LoginUser(m.getId(),m.getPassword(),m.getName(),m.getEmail(),m.getPhoneNumber(),m.getGender(),m.getGrade(),m.getTotal());
-//                    return ;
-//                }else {
-//                    result++;
-//                }
-//            }else {
-//                result1++;
-//            }
-//        }
-//        if(result<profile.size()){
-//            reLogin(1,id);
-//        }else if(result1<profile.size()){
-//            reLogin(2,id);
-//        }
 
-    }
-
-    public void reLogin(int number,String id) {
-        switch (number){
-            case 1 :
-                for(int i=0 ; i<3 ; i++){
-                    System.out.println("Passwords do not match"+"\n"+"Please re-enter your password");
-                    String password = scanner.nextLine();
-
-                    for(Member m : profile){
-                        if(m.getPassword().equals(password) && m.getId().equals(id)){
-                            System.out.println("login OK");
-                            break;
-                        }
-                    }
-                    if(i==2){
-                        System.out.println("Passwords do not match");
-                        realignment();
-                    }
-                }
+    public void tryLogin() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter ID to log in");
+        String id = scanner.nextLine();
+        System.out.println("Please enter password to log in");
+        String password = scanner.nextLine();
+        int count=0;
+        for(Member m : profile){
+            if(m.getId().equals(id)&& m.getPassword().equals(password)){
+                System.out.println("login Ok");
+                String userid = m.getId();
+                String userPassword = m.getPassword();
+                String userName = m.getName();
+                String userEmail = m.getEmail();
+                String userPhoneNumber = m.getPhoneNumber();
+                String userGender = m.getGender();
+                char userGrade = m.getGrade();
+                int userTotal = m.getTotal();
+                User consumer = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                loginUser.login(consumer);
                 break;
-            case 2 :
-                realignment();
-                break;
+            }else{
+                count++;
 
+            }
+        }
+        if(count>0){
+            realignment();
         }
     }
         public void realignment(){
             System.out.println("choose 1. Re-enter 2. reset your password");
             int choose = scanner.nextInt();
+
             switch (choose) {
                 case 1:
                     System.out.println("Please re-enter login");
@@ -166,11 +145,21 @@ public class Registration {
                     for(Member m : profile){
                         if(m.getId().equals(id) && m.getPassword().equals(password)){
                             System.out.println("login Ok");
-                            break;
+                            String userid = m.getId();
+                            String userPassword = m.getPassword();
+                            String userName = m.getName();
+                            String userEmail = m.getEmail();
+                            String userPhoneNumber = m.getPhoneNumber();
+                            String userGender = m.getGender();
+                            char userGrade = m.getGrade();
+                            int userTotal = m.getTotal();
+                            User consumer = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                            loginUser.login(consumer);
+                            return;
                         }
                     }
-                    System.out.println("reset your password ");
                 case 2:
+                    System.out.println("reset your password ");
                     System.out.println("write your Id ");
                     Scanner scanner = new Scanner(System.in);
                     id = scanner.nextLine();
@@ -194,8 +183,7 @@ public class Registration {
                                     System.out.println("a member who has withdrawn");
                                     return;
                                 }
-                                loginMember();
-                                break;
+                                return;
                             }else{
                                 System.out.println("The two passwords you entered do not match");
                                 return;
