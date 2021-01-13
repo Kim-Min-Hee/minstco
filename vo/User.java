@@ -12,7 +12,8 @@ public class User {
     private int total;
 
     public String UserInfo(){
-        return "User infomation : "+id+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total;
+        return "User infomation "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+
+                "\t"+"grade : "+grade+"\t"+"total : "+total;
     }
 
     public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total){

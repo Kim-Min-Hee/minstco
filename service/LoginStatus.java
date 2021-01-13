@@ -1,14 +1,14 @@
 package service;
 import app.Minstco;
 import sun.lwawt.macosx.CSystemTray;
+import vo.Member;
 import vo.User;
-
-import java.util.ArrayList;
+import service.Registration;
 import java.util.Scanner;
 
 public class LoginStatus {
     private static final char[] LoginStatus= null;
-    private static final String User =null;
+    public static final String User =null;
     User consumer = null;
     Scanner scanner = new Scanner(System.in);
 
@@ -19,18 +19,15 @@ public class LoginStatus {
         if(consumer.getGrade()=='D'){
             System.out.println("a member who has withdrawn");
         }
-        isLogin();
     }
 
     public boolean isLogin(){
-        System.out.println("@@");
         boolean check = false;
         if(this.consumer !=null){
             check = true;
         }else{
             check = false;
         }
-        System.out.println(check);
         return check;
     }
 
@@ -44,10 +41,89 @@ public class LoginStatus {
         System.out.println("write your password");
         String password = scanner.nextLine();
             if(consumer.getPassword().equals(password)){
-                System.out.println(password);
+                System.out.println(consumer.UserInfo());
             }
+    }
+
+    public void editInformation(){
+
+        System.out.println("write your password");
+        Scanner scanner = new Scanner(System.in);
+        String password = scanner.nextLine();
+        Registration registration = new Registration();
+        if(consumer.getPassword().equals(password)){
+            System.out.println("You can edit your information / Select the information you want to edit"+"\n"
+                    +"1. name 2. email 3. phoneNumber ");
+            int select = scanner.nextInt();
+            switch(select){
+                case 1 :
+                    System.out.println("Please write the name to change");
+                    scanner.nextLine();
+                    String name = scanner.nextLine();
+                    consumer.setName(name);
+                    String userid = consumer.getId();
+                    String userPassword = consumer.getPassword();
+                    String userName = name;
+                    String userEmail = consumer.getEmail();
+                    String userPhoneNumber = consumer.getPhoneNumber();
+                    String userGender = consumer.getGender();
+                    char userGrade = consumer.getGrade();
+                    int userTotal = consumer.getTotal();
+                    Member member = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                    System.out.println(consumer.UserInfo());
+                    break;
+                case 2 :
+                    System.out.println("Please write the email to change");
+                    scanner.nextLine();
+                    String email = scanner.nextLine();
+                    boolean verify = email.contains("@") && email.contains(".");
+                    int check = 0;
+                    if(verify){
+                        for(Member m : registration.profile){
+                            if(m.getEmail().equals(email)){
+                                System.out.println("the email can not use");
+                            }else{
+                                check++;
+                            }
+                            if(check == registration.profile.size()){
+                                System.out.println("Email address that can be used");
+                                consumer.setEmail(email);
+                                System.out.println(consumer.UserInfo());
+                            }
+                        }
+
+                    }else{
+                        System.out.println("Email format is incorrect");
+                    }
+                    break;
+                case 3 :
+                    System.out.println("Please write the phoneNumber to change");
+                    scanner.nextLine();
+                    String phoneNumber = scanner.nextLine();
+                    if(phoneNumber.length()<12 && phoneNumber.length()>9){
+                        consumer.setPhoneNumber(phoneNumber);
+                        System.out.println(consumer.UserInfo());
+                    }else{
+                        System.out.println("Cell phone number format is incorrect");
+                    }
 
 
+
+            }
+        }else {
+            System.out.println("Passwords do not match");
+        }
+
+    }
+    public void MembershipWithdrawal(){
+        System.out.println("write your ID");
+        String id = scanner.nextLine();
+        System.out.println("write your PASSWORD");
+        String password = scanner.nextLine();
+        if(id.equals(consumer.getId()) && password.equals(consumer.getPassword())){
+            consumer.setGrade('D');
+            System.out.println(consumer.UserInfo());
+        }
     }
 
 }
