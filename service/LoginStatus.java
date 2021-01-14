@@ -12,13 +12,19 @@ public class LoginStatus {
     User consumer = null;
     Scanner scanner = new Scanner(System.in);
 
-    public void login (User consumer){
-        System.out.println("welcome "+"\t"+consumer.getId());
-        this.consumer = consumer;
+    public String loginInformation(){
+        return consumer.getId();
 
+    }
+
+    public void login (User consumer){
         if(consumer.getGrade()=='D'){
             System.out.println("a member who has withdrawn");
+            return;
         }
+        System.out.println("login Ok");
+        System.out.println("welcome "+"\t"+consumer.getId());
+        this.consumer = consumer;
     }
 
     public boolean isLogin(){
@@ -30,6 +36,8 @@ public class LoginStatus {
         }
         return check;
     }
+
+
 
     public void logout(){
         consumer=null;
@@ -69,7 +77,7 @@ public class LoginStatus {
                     String userGender = consumer.getGender();
                     char userGrade = consumer.getGrade();
                     int userTotal = consumer.getTotal();
-                    Member member = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                    Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
                     System.out.println(consumer.UserInfo());
                     break;
                 case 2 :
@@ -88,6 +96,15 @@ public class LoginStatus {
                             if(check == registration.profile.size()){
                                 System.out.println("Email address that can be used");
                                 consumer.setEmail(email);
+                                userid = consumer.getId();
+                                 userPassword = consumer.getPassword();
+                                 userName = consumer.getName();
+                                 userEmail = email;
+                                 userPhoneNumber = consumer.getPhoneNumber();
+                                 userGender = consumer.getGender();
+                                 userGrade = consumer.getGrade();
+                                 userTotal = consumer.getTotal();
+                                Member emailChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
                                 System.out.println(consumer.UserInfo());
                             }
                         }
@@ -102,6 +119,15 @@ public class LoginStatus {
                     String phoneNumber = scanner.nextLine();
                     if(phoneNumber.length()<12 && phoneNumber.length()>9){
                         consumer.setPhoneNumber(phoneNumber);
+                        userid = consumer.getId();
+                        userPassword = consumer.getPassword();
+                        userName = consumer.getName();
+                        userEmail = consumer.getEmail();
+                        userPhoneNumber = phoneNumber;
+                        userGender = consumer.getGender();
+                        userGrade = consumer.getGrade();
+                        userTotal = consumer.getTotal();
+                        Member phoneNumberChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
                         System.out.println(consumer.UserInfo());
                     }else{
                         System.out.println("Cell phone number format is incorrect");
@@ -122,7 +148,18 @@ public class LoginStatus {
         String password = scanner.nextLine();
         if(id.equals(consumer.getId()) && password.equals(consumer.getPassword())){
             consumer.setGrade('D');
-            System.out.println(consumer.UserInfo());
+            String userid = consumer.getId();
+            String userPassword = consumer.getPassword();
+            String userName = consumer.getName();
+            String userEmail = consumer.getEmail();
+            String userPhoneNumber = consumer.getPhoneNumber();
+            String userGender = consumer.getGender();
+            char userGrade = 'D';
+            int  userTotal = consumer.getTotal();
+            Member withdrawal = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+            System.out.println(consumer.getId()+" Thank you for using it so far");
+            logout();
+
         }
     }
 

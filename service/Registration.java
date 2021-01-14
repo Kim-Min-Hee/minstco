@@ -13,7 +13,6 @@ public class Registration {
     public ArrayList<Member> profile = new ArrayList<Member>();
     Scanner scanner = new Scanner(System.in);
     LoginStatus loginUser = new LoginStatus();
-    Minstco minstco = new Minstco();
     public Registration() {
         Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415", "F", 'A', 0);
         Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812", "M", 'D', 0);

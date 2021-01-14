@@ -29,6 +29,41 @@ public class User {
         System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public char getGrade() {
+        return grade;
+    }
+
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    public int getTotal() {
+        return total;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -64,41 +99,5 @@ public class User {
 
     public void setTotal(int total) {
         this.total = total;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public char getGrade() {
-        return grade;
-    }
-
-    public String getJoinDate() {
-        return joinDate;
-    }
-
-    public int getTotal() {
-        return total;
     }
 }
