@@ -1,9 +1,7 @@
 package service;
-import app.Minstco;
-import sun.lwawt.macosx.CSystemTray;
 import vo.Member;
 import vo.User;
-import service.Registration;
+
 import java.util.Scanner;
 
 public class LoginStatus {
@@ -12,9 +10,12 @@ public class LoginStatus {
     User consumer = null;
     Scanner scanner = new Scanner(System.in);
 
-    public String loginInformation(){
-        return consumer.getId();
-
+//    public String loginInformation(){
+//        return consumer.getId();
+//
+//    }
+    public void loginInformation(){
+         User consumer;
     }
 
     public void login (User consumer){
@@ -46,6 +47,7 @@ public class LoginStatus {
 
 
     public void informationDetails(){
+        if()
         System.out.println("write your password");
         String password = scanner.nextLine();
             if(consumer.getPassword().equals(password)){

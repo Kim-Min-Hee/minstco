@@ -3,6 +3,8 @@ package service;
 import vo.Product;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Merchandise {
@@ -109,13 +111,13 @@ public class Merchandise {
     }
 
     public void amendProduct(){
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("write productCode");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("write productCode"+"\n"+"If you want to stop typing, enter /finish/");
             String code = scanner.nextLine();
-            for (int i=0 ; i<saveGoods.size();i++) {
-                    if (saveGoods.get(i).getGoodsCode().equals(code)) {
-                        System.out.println(saveGoods.get(i).getInfor());
+                for (int i=0 ; i<saveGoods.size();i++) {
+                    Product product = saveGoods.get(i);
+                    if (product.getGoodsCode().equals(code)) {
                         System.out.println("Which part do you want to edit " + "\n" + "1. goodsName 2. goodsQuantity 3. goodsPrice");
                         int choose = scanner.nextInt();
                         if (choose == 1) {
@@ -123,35 +125,78 @@ public class Merchandise {
                             scanner.nextLine();
                             String name = scanner.nextLine();
 
-                            String goodsCategory = saveGoods.get(i).getGoodsCategory();
-                            String goodsCode = saveGoods.get(i).getGoodsCode();
+                            String goodsCategory = product.getGoodsCategory();
+                            String goodsCode = product.getGoodsCode();
                             String goodsName = name;
-                            int goodsPrice = saveGoods.get(i).getGoodsPrice();
-                            int goodsQuantity = saveGoods.get(i).getGoodsQuantity();
+                            int goodsPrice = product.getGoodsPrice();
+                            int goodsQuantity = product.getGoodsQuantity();
                             Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
                             saveGoods.add(changeProduct);
-                            saveGoods.remove(saveGoods.get(i));
-
+                            saveGoods.remove(product);
+                            break;
                         } else if (choose == 2) {
                             System.out.println("Please write the quantity to change");
                             int quantity = scanner.nextInt();
 
-//                            String goodsCategory = product.getGoodsCategory();
-//                            String goodsCode = product.getGoodsCode();
-//                            String goodsName = product.getGoodsName();
-//                            int goodsPrice = product.getGoodsPrice();
-//                            int goodsQuantity = quantity;
-//                            Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
-//                            saveGoods.add(changeProduct);
-//                            saveGoods.remove(product);
+                            String goodsCategory = product.getGoodsCategory();
+                            String goodsCode = product.getGoodsCode();
+                            String goodsName = product.getGoodsName();
+                            int goodsPrice = product.getGoodsPrice();
+                            int goodsQuantity = quantity;
+                            Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
+                            saveGoods.add(changeProduct);
+                            saveGoods.remove(product);
+                            break;
+                        }else if(choose==3){
+                            System.out.println("Please write the price to change");
+                            int price = scanner.nextInt();
+
+                            String goodsCategory = product.getGoodsCategory();
+                            String goodsCode = product.getGoodsCode();
+                            String goodsName = product.getGoodsName();
+                            int goodsPrice = price;
+                            int goodsQuantity = product.getGoodsQuantity();
+                            Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
+                            saveGoods.add(changeProduct);
+                            saveGoods.remove(product);
+                            System.out.println(product.getInfor());
+                            break;
                         }
                     }
                 }
-                if (code.equals("finish")) {
-                    break;
+            if (code.equals("finish")) {
+                break;
+            }
+
+            }
+        }
+
+        public void deleteProduct(){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter the product code you want to delete");
+            String code = scanner.nextLine();
+            for(int i=0; i<saveGoods.size();i++) {
+                Product product = saveGoods.get(i);
+                if(product.getGoodsCode().equals(code)){
+                    System.out.println(product.getInfor());
+                    System.out.println("Would you like to delete this product choose Y or N");
+                    String select = scanner.nextLine();
+                    if(select.equals("Y") || select.equals("y")){
+                        System.out.println("write your password");
+                        String password = scanner.nextLine();
+                        if(password.equals("admin")){
+                            saveGoods.remove(product);
+                            System.out.println(product.getInfor());
+
+                        }else{
+                            System.out.println("Incorrect password");
+                            return;
+                        }
+                    }
                 }
+
             }
 
 
-    }
+        }
 }

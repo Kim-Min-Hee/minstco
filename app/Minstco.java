@@ -66,7 +66,7 @@ public class Minstco {
 
             } else {
                 Scanner scanner = new Scanner(System.in);
-                if(loginUser.loginInformation().equals("admin")){
+                if(loginUser.loginInformation()){
                     System.out.println("choose 1. Product management 2. Member management 3. Sales management");
                     int number = scanner.nextInt();
                     switch (number){
@@ -79,6 +79,22 @@ public class Minstco {
                                 merchandise.selectProduct(loginUser.loginInformation());
                             }else if(choose==3){
                                 merchandise.amendProduct();
+                            }else if(choose==4){
+                                merchandise.deleteProduct();
+                            }else{
+                                System.out.println("Wrong choice");
+                            }
+                            break;
+
+                        case 2 :
+                            System.out.println("1. Select Member 2. Member information modification");
+                            int select = scanner.nextInt();
+                            if(select==1){
+
+                            }else if(select==2){
+
+                            }else{
+
                             }
                     }
                     return;
