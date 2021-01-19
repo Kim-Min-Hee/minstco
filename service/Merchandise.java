@@ -1,5 +1,7 @@
 package service;
 
+import vo.BuyProduct;
+import vo.Member;
 import vo.Product;
 
 import java.util.ArrayList;
@@ -11,7 +13,9 @@ public class Merchandise {
     private static final char[] Merchadise= null;
     private static final String Product = null;
     public ArrayList<Product> saveGoods = new ArrayList<Product>();
+    public ArrayList<BuyProduct>buy = new ArrayList<BuyProduct>();
     Scanner scanner = new Scanner(System.in);
+    LoginStatus loginStatus = new LoginStatus();
 
     public Merchandise() {
         Product goods1 = new Product("food", "F1", "goraebab", 1200, 100);
@@ -38,6 +42,8 @@ public class Merchandise {
 
     }
 
+
+
     public void insertProduct(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("write goodsCategory");
@@ -56,9 +62,9 @@ public class Merchandise {
     }
 
 
-    public void selectProduct(String loginId){
+    public void selectProduct(String id){
         int select;
-        if(loginId.equals("admin")){
+        if(id.equals("admin")){
             System.out.println("choose 1. View all products 2. Search products by category 3. Search by product name 4. Select Out of stock products");
             select = scanner.nextInt();
         }else {
@@ -98,8 +104,7 @@ public class Merchandise {
                 }
             }
 
-        }else if(select==4 && loginId.equals("admin")){
-            System.out.println(loginId);
+        }else if(select==4 && id.equals("admin")){
             for(Product product : saveGoods){
                 if(product.getGoodsQuantity()==0){
                     System.out.println(product.getInfor());
@@ -199,4 +204,67 @@ public class Merchandise {
 
 
         }
+
+        public void buyProduct(){
+        boolean zero = true;
+        int count = 0;
+        while(true){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter the desired product code");
+            String code = scanner.nextLine();
+
+            if(code.contains("finish")){
+                for(BuyProduct buyProduct : buy){
+                    double purchase=0;
+                    if(loginStatus.consumer.getGrade()=='A'){
+                        purchase = 0.1;
+                    }else if(loginStatus.consumer.getGrade()=='B'){
+                        purchase = 0.05;
+                    }else {
+                        purchase = 0.03;
+                    }
+                    int sum = buyProduct.getBuyGoodsPrice()* buyProduct.getBuyGoodsQuantity();
+                    double total = sum*purchase;
+                    System.out.println(total);
+                    break;
+                }
+                break;
+            }
+            for(int i=0; i<saveGoods.size();i++){
+                Product product = saveGoods.get(i);
+                if(product.getGoodsCode().equals(code)){
+                    System.out.println("Enter the number you want to purchase");
+                    int number = scanner.nextInt();
+                    if(product.getGoodsQuantity() >= number){
+                        BuyProduct buyProduct = new BuyProduct(product.getGoodsCategory(), product.getGoodsCode(), product.getGoodsName(),
+                                product.getGoodsPrice(), product.getGoodsQuantity());
+                        buy.add(buyProduct);
+                        int sum = product.getGoodsQuantity()-number;
+                        Product product1 = new Product(product.getGoodsCategory(),product.getGoodsCode(), product.getGoodsName(), product.getGoodsPrice()
+                        , sum);
+                        saveGoods.remove(product);
+
+                        break;
+                    }else {
+                        zero=false;
+                    }
+                }else {
+                    count++;
+                }
+                if(zero==false){
+                    System.out.println("The product is out of stock");
+                    break;
+                }
+                if(count==saveGoods.size()){
+                    System.out.println("There is no code entered");
+                    break;
+                }
+            }
+
+
+      }
+
+
+        }
+
 }

@@ -17,6 +17,7 @@ public class Product {
         System.out.println("category : "+goodsCategory+"\t"+"code : "+goodsCode+"\t"+"name : "+goodsName+"\t"+"price : "+goodsPrice+"\t"+"quantity : "+goodsQuantity);
 
     }
+
     public String getInfor(){
         return "goodsInformation"+"\n"+"goodsCategory : "+goodsCategory+"\t"+"goodsCode : "+goodsCode+"\t"+"goodsName : "+goodsName+
                 "\t"+"goodsPrice : "+goodsPrice+"\t"+"goodsQuantity : "+goodsQuantity;

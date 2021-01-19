@@ -1,6 +1,7 @@
 package service;
 
 import app.Minstco;
+import vo.BuyProduct;
 import vo.Member;
 import vo.User;
 
@@ -13,11 +14,15 @@ public class Registration {
     public ArrayList<Member> profile = new ArrayList<Member>();
     Scanner scanner = new Scanner(System.in);
     LoginStatus loginUser = new LoginStatus();
+    Merchandise merchandise = new Merchandise();
     public Registration() {
-        Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415", "F", 'A', 0);
-        Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812", "M", 'D', 0);
-        Member m3 = new Member("q","q","q","xldkah@naver.com","11111111111","F",'B',0);
-        Member m4 = new Member("admin","admin","admin","admin@google.com","1234567890","F",'A',100000);
+        Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415",
+                "F", 'A', 100000,0);
+        Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812",
+                "M", 'D', 0,0);
+        Member m3 = new Member("q","q","q","xldkah@naver.com","11111111111","F",'B',0,0);
+        Member m4 = new Member("admin","admin","admin","admin@google.com","1234567890","F",
+                'A',100000,0);
         profile.add(m1);
         profile.add(m2);
         profile.add(m3);
@@ -87,16 +92,113 @@ public class Registration {
             System.out.println("You entered incorrectly");
         }
 
-        Member member = new Member(id, password, name, email, phoneNumber, gender, 'C', 0);
+        Member member = new Member(id, password, name, email, phoneNumber, gender, 'C', 0,0);
         profile.add(member);
 
     }
-    public void selectAllMember(){
-        System.out.println("show member list");
-        for(int i = 0;i<profile.size();i++){
-            System.out.println(profile.get(i).getInfo());
+    public void selectMember(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Select  1. Member Select All 2. Select by Member Level 3. Search by  ID +\n" +
+                "4. Search by  email 5. Search by  phone number");
+        int select = scanner.nextInt();
+        if(select==1){
+            System.out.println("show member list");
+            for(int i = 0;i<profile.size();i++){
+                System.out.println(profile.get(i).getInfo());
+            }
+        }else if(select==2){
+            System.out.println("Which level do you want to search"+"\t"+"1. A 2. B 3. C 4. D");
+            int choose = scanner.nextInt();
+            char grade;
+            if(choose==1){
+                grade ='A';
+            }else if(choose==2){
+                grade = 'B';
+            }else if(choose==3){
+                grade = 'C';
+            }else{
+                grade='D';
+            }
+                for(Member m : profile){
+                    if(m.getGrade()==grade){
+                        System.out.println(m.getInfo());
+                    }
+                }
+
+        }else if(select==3){
+            System.out.println("Please enter the ID you want to search");
+            scanner.nextLine();
+            String id = scanner.nextLine();
+
+            for(Member m : profile){
+                if (m.getId().contains(id)) {
+                    System.out.println(m.getInfo());
+                }
+            }
+        }else if(select==4){
+            System.out.println("enter the Email you want to search");
+            scanner.nextLine();
+            String email = scanner.nextLine();
+
+            for(Member m : profile){
+                if(m.getEmail().contains(email)){
+                    System.out.println(m.getEmail());
+                }
+            }
+
+        }else if(select==5){
+            System.out.println("enter the phoneNumber you want to search");
+            scanner.nextLine();
+            String number = scanner.nextLine();
+            for(Member m: profile){
+                if(m.getPhoneNumber().equals(number)){
+                    System.out.println(m.getInfo());
+                }
+            }
+        }else{
+            System.out.println("Wrong number");
+        }
+
+    }
+
+    public void informationModification(String id){
+        for(int i=0;i<profile.size();i++){
+            Member m = profile.get(i);
+            if(m.getId().equals(id)){
+                System.out.println("write your password");
+                String password = scanner.nextLine();
+                if(password.equals("admin")){
+                    System.out.println("Write down the grade you want to change");
+                    String y = scanner.nextLine();
+                    char grade = y.charAt(0);
+                    Member member = new Member(m.getId(),m.getPassword(),m.getName(),m.getEmail(),m.getPhoneNumber(),m.getGender(),grade,m.getTotal(),m.getDiscount());
+                    profile.add(member);
+                    profile.remove(m);
+                }
+                break;
+            }
+        }
+
+
+    }
+    public void salesManagement(){
+        System.out.println("Select  1.Total sales amount 2. Total amount of discount 3. Grade discount rate adjustment");
+        int choose = scanner.nextInt();
+        int sum=0;
+        if(choose==1){
+            for(Member m : profile){
+                sum += m.getTotal();
+            }
+            System.out.println(sum);
+        }else if(choose==2){
+
+        }else if(choose==3){
+
+        }else{
+
         }
     }
+
 
 
     public void tryLogin(String id, String password) {
@@ -157,7 +259,7 @@ public class Registration {
                             String password= scanner.nextLine();
                             if(rePassword.equals(password)){
                                 Member member = new Member(id, rePassword,profile.get(y).getName(),email,profile.get(y).getPhoneNumber(),
-                                        gender,profile.get(y).getGrade(),profile.get(y).getTotal());
+                                        gender,profile.get(y).getGrade(),profile.get(y).getTotal(),profile.get(y).getDiscount());
                                 profile.add(member);
                                 profile.remove(y);
                                 if(member.getGrade()=='D'){

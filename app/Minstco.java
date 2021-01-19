@@ -3,6 +3,7 @@ package app;
 import service.LoginStatus;
 import service.Merchandise;
 import service.Registration;
+import vo.BuyProduct;
 import vo.Member;
 import vo.User;
 import vo.Product;
@@ -48,7 +49,8 @@ public class Minstco {
                                     String userGender = m.getGender();
                                     char userGrade = m.getGrade();
                                     int userTotal = m.getTotal();
-                                    User user = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                                    double userDiscount= m.getDiscount();
+                                    User user = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
                                     loginUser.login(user);
 
 
@@ -63,10 +65,10 @@ public class Minstco {
                         }
                 }
 
-
             } else {
                 Scanner scanner = new Scanner(System.in);
-                if(loginUser.loginInformation()){
+                User loginConsumer = loginUser.loginInformation();
+                if(loginConsumer.getId().equals("admin")){
                     System.out.println("choose 1. Product management 2. Member management 3. Sales management");
                     int number = scanner.nextInt();
                     switch (number){
@@ -76,7 +78,7 @@ public class Minstco {
                             if(choose==1){
                                 merchandise.insertProduct();
                             }else if(choose ==2){
-                                merchandise.selectProduct(loginUser.loginInformation());
+                                merchandise.selectProduct(loginConsumer.getId());
                             }else if(choose==3){
                                 merchandise.amendProduct();
                             }else if(choose==4){
@@ -90,12 +92,19 @@ public class Minstco {
                             System.out.println("1. Select Member 2. Member information modification");
                             int select = scanner.nextInt();
                             if(select==1){
-
+                                registration.selectMember();
                             }else if(select==2){
-
+                                System.out.println("Write down the ID you want to edit");
+                                scanner.nextLine();
+                                String id = scanner.nextLine();
+                                registration.informationModification(id);
                             }else{
-
+                                System.out.println("Wrong choice");
                             }
+
+                        case 3 :
+                            registration.salesManagement();
+
                     }
                     return;
                 }else{
@@ -107,7 +116,14 @@ public class Minstco {
                             int number = scanner.nextInt();
 
                             if (number == 1) {
-                                loginUser.informationDetails();
+                                System.out.println("write your password");
+                                String password =scanner.nextLine();
+                                if(password.equals(loginConsumer.getPassword())){
+                                    loginUser.informationDetails();
+                                }else{
+                                    System.out.println("passwords are Wrong");
+                                }
+
                             } else if (number == 2) {
                                 loginUser.editInformation();
                             }else if(number==3){
@@ -119,10 +135,22 @@ public class Minstco {
                             }
                             break;
                         case 2:
-                            merchandise.selectProduct(loginUser.loginInformation());
+                            merchandise.selectProduct(loginConsumer.getId());
                             break;
                         case 3 :
-
+                            while (true){
+                                System.out.println("Enter the desired product code");
+                                String code = scanner.nextLine();
+                                for(Product product : merchandise.saveGoods){
+                                    if(product.getGoodsCode().equals(code)){
+                                        System.out.println("Enter the number you want to purchase");
+                                        int purchase = scanner.nextInt();
+                                        if(purchase<=product.getGoodsQuantity()){
+                                            String 
+                                        }
+                                    }
+                                }
+                            }
                         case 4:
                             System.out.println("You are logged out");
                             loginUser.logout();

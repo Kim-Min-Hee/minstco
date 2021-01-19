@@ -10,13 +10,17 @@ public class User {
     private char grade;
     private String joinDate;
     private int total;
+    private double discount;
+
 
     public String UserInfo(){
         return "User infomation "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+
-                "\t"+"grade : "+grade+"\t"+"total : "+total;
+                "\t"+"grade : "+grade+"\t"+"total : "+total+"\t"+"discount : "+discount;
     }
 
-    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total){
+
+
+    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total, double discount){
         this.id = id;
         this.password = password;
         this.name=name;
@@ -25,8 +29,13 @@ public class User {
         this.gender = gender;
         this.grade = grade;
         this.total = total;
+        this.discount = discount;
 
-        System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total);
+        System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total+"\t"+discount);
+    }
+
+    public double getDiscount() {
+        return discount;
     }
 
     public String getId() {
@@ -99,5 +108,9 @@ public class User {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 }

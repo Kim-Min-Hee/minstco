@@ -1,4 +1,5 @@
 package service;
+import vo.BuyProduct;
 import vo.Member;
 import vo.User;
 
@@ -10,12 +11,8 @@ public class LoginStatus {
     User consumer = null;
     Scanner scanner = new Scanner(System.in);
 
-//    public String loginInformation(){
-//        return consumer.getId();
-//
-//    }
-    public void loginInformation(){
-         User consumer;
+    public  User loginInformation(){
+         return consumer;
     }
 
     public void login (User consumer){
@@ -45,14 +42,23 @@ public class LoginStatus {
         System.out.println(consumer);
     }
 
+    public void ProductCalculation(){
+        double purchase=0;
+        if(consumer.getGrade()=='A'){
+            purchase = 0.1;
+        }else if(consumer.getGrade()=='B'){
+            purchase = 0.05;
+        }else {
+            purchase = 0.03;
+        }
+        System.out.println("discount : "+purchase);
+
+    }
+
 
     public void informationDetails(){
-        if()
-        System.out.println("write your password");
-        String password = scanner.nextLine();
-            if(consumer.getPassword().equals(password)){
-                System.out.println(consumer.UserInfo());
-            }
+            System.out.println(consumer.UserInfo());
+
     }
 
     public void editInformation(){
@@ -79,7 +85,8 @@ public class LoginStatus {
                     String userGender = consumer.getGender();
                     char userGrade = consumer.getGrade();
                     int userTotal = consumer.getTotal();
-                    Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                    double userDiscount = consumer.getDiscount();
+                    Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
                     System.out.println(consumer.UserInfo());
                     break;
                 case 2 :
@@ -106,7 +113,8 @@ public class LoginStatus {
                                  userGender = consumer.getGender();
                                  userGrade = consumer.getGrade();
                                  userTotal = consumer.getTotal();
-                                Member emailChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                                 userDiscount = consumer.getDiscount();
+                                Member emailChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
                                 System.out.println(consumer.UserInfo());
                             }
                         }
@@ -129,7 +137,9 @@ public class LoginStatus {
                         userGender = consumer.getGender();
                         userGrade = consumer.getGrade();
                         userTotal = consumer.getTotal();
-                        Member phoneNumberChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+                        userDiscount = consumer.getDiscount();
+                        Member phoneNumberChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
+
                         System.out.println(consumer.UserInfo());
                     }else{
                         System.out.println("Cell phone number format is incorrect");
@@ -158,7 +168,8 @@ public class LoginStatus {
             String userGender = consumer.getGender();
             char userGrade = 'D';
             int  userTotal = consumer.getTotal();
-            Member withdrawal = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal);
+            double userDiscount = consumer.getDiscount();
+            Member withdrawal = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
             System.out.println(consumer.getId()+" Thank you for using it so far");
             logout();
 

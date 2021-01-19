@@ -10,8 +10,11 @@ public class Member {
     private char grade;
     private String joinDate;
     private int total;
+    private double discount;
 
-public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total){
+
+
+    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total, double discount){
     this.id = id;
     this.password = password;
     this.name=name;
@@ -20,14 +23,18 @@ public Member(String id , String password, String name , String email, String ph
     this.gender = gender;
     this.grade = grade;
     this.total = total;
+    this.discount= discount;
 
-    System.out.println("member : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total);
+    System.out.println("member : "+"id : "+id+"\t"+"password : "+password+"\t"+"name : "+name+"\t"+"email : "+email+
+            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t"+"total : "+total+"\t"+"discount : "+discount);
 }
 public String getInfo(){
     return "member infomation : "+id+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total;
 }
 
-
+    public double getDiscount() {
+        return discount;
+    }
 
     public char getGrade() {
         return grade;
@@ -99,5 +106,9 @@ public String getInfo(){
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 }
