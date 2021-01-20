@@ -34,6 +34,9 @@ public class LoginStatus {
         }
         return check;
     }
+    public void reflection(int total , double discount ,int pay){
+
+        }
 
 
 
@@ -175,5 +178,7 @@ public class LoginStatus {
 
         }
     }
+
+
 
 }

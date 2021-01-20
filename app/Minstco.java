@@ -138,19 +138,50 @@ public class Minstco {
                             merchandise.selectProduct(loginConsumer.getId());
                             break;
                         case 3 :
-                            while (true){
-                                System.out.println("Enter the desired product code");
+                            while (true) {
+                                System.out.println("If you want to stop buying, please click (x)");
+                                System.out.println("Enter the product code you want to buy");
+                                scanner.nextLine();
                                 String code = scanner.nextLine();
-                                for(Product product : merchandise.saveGoods){
-                                    if(product.getGoodsCode().equals(code)){
-                                        System.out.println("Enter the number you want to purchase");
-                                        int purchase = scanner.nextInt();
-                                        if(purchase<=product.getGoodsQuantity()){
-                                            String 
+                                if (!code.equals("x")) {
+                                    int count = 0;
+                                    for (int i = 0; i < merchandise.saveGoods.size(); i++) {
+                                        Product product = merchandise.saveGoods.get(i);
+                                        if (product.getGoodsCode().equals(code)) {
+                                            System.out.println("Enter the number of products you want to buy");
+                                            int quantity = scanner.nextInt();
+                                            if (product.getGoodsQuantity() >= quantity) {
+                                                String category = product.getGoodsCategory();
+                                                String name = product.getGoodsName();
+                                                int price = product.getGoodsPrice();
+
+                                                BuyProduct buyProduct = new BuyProduct(category, code, name, price, quantity);
+                                                merchandise.buy.add(buyProduct);
+                                                break;
+                                            } else {
+                                                System.out.println("The number of products has been exceeded");
+                                            }
+                                        } else {
+                                            count++;
+                                        }
+                                        if (count == merchandise.saveGoods.size()) {
+                                            System.out.println("Wrong Code");
+                                            break;
                                         }
                                     }
                                 }
+                                double discount = 0;
+                                if (loginConsumer.getGrade() == 'A') {
+                                    discount = 0.1;
+                                } else if (loginConsumer.getGrade() == 'B') {
+                                    discount = 0.05;
+                                } else {
+                                    discount = 0.01;
+                                }
+
+                                registration.calculation(discount);
                             }
+
                         case 4:
                             System.out.println("You are logged out");
                             loginUser.logout();

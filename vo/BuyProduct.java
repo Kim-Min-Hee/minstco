@@ -62,7 +62,7 @@ public class BuyProduct {
         this.buyGoodsName = buyGoodsName;
         this.buyGoodsPrice = buyGoodsPrice;
         this.buyGoodsQuantity=buyGoodsQuantity;
-        this.buyTotal = buyTotal;
+        this.buyTotal = buyGoodsPrice * buyGoodsQuantity;
 
         System.out.println("category : "+buyGoodsCategory+"\t"+"code : "+buyGoodsCode+"\t"+"name : "+buyGoodsName+"\t"+"price : "+buyGoodsPrice+
                 "\t"+"quantity : "+buyGoodsQuantity);

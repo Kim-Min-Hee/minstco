@@ -14,6 +14,15 @@ public class User {
 
 
     public String UserInfo(){
+//        if(grade=='A'){
+//            discount=0.1;
+//        }else if(grade=='B'){
+//            discount= 0.05
+//        }else if(grade=='C'){
+//            discount=0.03;
+//        }else{
+//            discount=0;
+//        }
         return "User infomation "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+
                 "\t"+"grade : "+grade+"\t"+"total : "+total+"\t"+"discount : "+discount;
     }

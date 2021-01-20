@@ -277,7 +277,13 @@ public class Registration {
                     break;
             }
         }
+    public void calculation(double discount) {
+        for(BuyProduct buyProduct : merchandise.buy){
+            double sum = buyProduct.getBuyTotal()*discount;
+        }
 
     }
+
+}
 
 
