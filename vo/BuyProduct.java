@@ -64,12 +64,12 @@ public class BuyProduct {
         this.buyGoodsQuantity=buyGoodsQuantity;
         this.buyTotal = buyGoodsPrice * buyGoodsQuantity;
 
-        System.out.println("category : "+buyGoodsCategory+"\t"+"code : "+buyGoodsCode+"\t"+"name : "+buyGoodsName+"\t"+"price : "+buyGoodsPrice+
+        System.out.println("Buy category : "+buyGoodsCategory+"\t"+"code : "+buyGoodsCode+"\t"+"name : "+buyGoodsName+"\t"+"price : "+buyGoodsPrice+
                 "\t"+"quantity : "+buyGoodsQuantity);
 
     }
     public String getBuyInfor(){
-        return "goodsInformation"+"\n"+"Category : "+buyGoodsCategory+"\t"+"Code : "+buyGoodsCode+"\t"+"goodsName : "+buyGoodsName+
+        return "BuyGoodsInformation"+"\n"+"Category : "+buyGoodsCategory+"\t"+"Code : "+buyGoodsCode+"\t"+"goodsName : "+buyGoodsName+
                 "\t"+"Price : "+buyGoodsPrice+"\t"+"Quantity : "+buyGoodsQuantity;
     }
 

@@ -203,25 +203,17 @@ public class Merchandise {
 
 
         }
+        public void buyProductDelete(){
+            System.out.println("%%%%");
+        for(int i=0; i<buy.size();i++){
+            System.out.println("@@@");
+            BuyProduct buyProduct = buy.get(i);
+            System.out.println(buyProduct.getBuyInfor());
+            buy.remove(buyProduct);
+            System.out.println(buyProduct.getBuyInfor());
+        }
 
-//        public void calculationProduct(char grade){
-//        double discount = 0;
-//            if(grade=='A'){
-//                discount=0.1;
-//            }else if(grade =='B'){
-//                discount=0.05;
-//            }else{
-//                discount=0.01;
-//            }
-//            for(BuyProduct buyProduct : buy){
-//                double discountedAmount = discount*buyProduct.getBuyTotal();
-//               int i= Integer.parseInt(String.valueOf(Math.round(discountedAmount)));
-//                int pay = buyProduct.getBuyTotal()-i;
-//                System.out.println("Total : "+buyProduct.getBuyTotal()+"discount : "+discountedAmount+"payment : "+pay);
-//                loginStatus.reflection(buyProduct.getBuyTotal(),discountedAmount,pay);
-//
-//            }
-//
-//        }
+        }
+
 
 }

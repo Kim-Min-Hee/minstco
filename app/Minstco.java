@@ -143,43 +143,57 @@ public class Minstco {
                                 System.out.println("Enter the product code you want to buy");
                                 scanner.nextLine();
                                 String code = scanner.nextLine();
-                                if (!code.equals("x")) {
-                                    int count = 0;
-                                    for (int i = 0; i < merchandise.saveGoods.size(); i++) {
-                                        Product product = merchandise.saveGoods.get(i);
-                                        if (product.getGoodsCode().equals(code)) {
-                                            System.out.println("Enter the number of products you want to buy");
-                                            int quantity = scanner.nextInt();
-                                            if (product.getGoodsQuantity() >= quantity) {
-                                                String category = product.getGoodsCategory();
-                                                String name = product.getGoodsName();
-                                                int price = product.getGoodsPrice();
+                                if (code.equals("x")) {
+                                    double discount = 0;
+                                    if(loginConsumer.getGrade()=='A'){
+                                        discount=0.1;
+                                    }else if(loginConsumer.getGrade()=='B'){
+                                        discount=0.05;
+                                    }else{
+                                        discount=0.03;
+                                    }
+                                    double discountedAmount=0;
+                                    int i=0;
+                                    int pay=0;
+                                    int total=0;
+                                    for(BuyProduct buyProduct : merchandise.buy){
+                                        System.out.println(buyProduct.getBuyInfor());
+                                        total += buyProduct.getBuyTotal();
+                                        discountedAmount += discount*total;
+                                        i= Integer.parseInt(String.valueOf(Math.round(discountedAmount)));
+                                        pay = total-i;
 
-                                                BuyProduct buyProduct = new BuyProduct(category, code, name, price, quantity);
-                                                merchandise.buy.add(buyProduct);
-                                                break;
-                                            } else {
-                                                System.out.println("The number of products has been exceeded");
-                                            }
-                                        } else {
-                                            count++;
-                                        }
-                                        if (count == merchandise.saveGoods.size()) {
-                                            System.out.println("Wrong Code");
+                                    }
+                                    System.out.println("Total : "+total+"discount : "+discountedAmount+"payment : "+pay);
+                                    //registration.productPurchaseRecord(total,discountedAmount,pay);
+                                    registration.productPurchaseRecord(total,discountedAmount,pay,loginConsumer.getId());
+                                    break;
+                                }
+                                int count=0;
+                                for(Product product : merchandise.saveGoods){
+                                    if(product.getGoodsCode().equals(code)){
+                                        System.out.println("Please fill in the number of purchases");
+                                        int amount = scanner.nextInt();
+                                        if(amount <= product.getGoodsQuantity()){
+                                            String category = product.getGoodsCategory();
+                                            String name = product.getGoodsName();
+                                            int price = product.getGoodsPrice();
+                                            BuyProduct buyProduct = new BuyProduct(category,code,name,price,amount);
+                                            merchandise.buy.add(buyProduct);
                                             break;
+                                        }else{
+                                            System.out.println("You have exceeded the number you can purchase");
                                         }
+
+                                    }else{
+                                        count++;
+                                    }
+                                    if(count==merchandise.saveGoods.size()){
+                                        System.out.println("No such code");
                                     }
                                 }
-                                double discount = 0;
-                                if (loginConsumer.getGrade() == 'A') {
-                                    discount = 0.1;
-                                } else if (loginConsumer.getGrade() == 'B') {
-                                    discount = 0.05;
-                                } else {
-                                    discount = 0.01;
-                                }
 
-                                registration.calculation(discount);
+
                             }
 
                         case 4:

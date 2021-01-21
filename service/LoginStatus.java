@@ -1,4 +1,5 @@
 package service;
+import app.Minstco;
 import vo.BuyProduct;
 import vo.Member;
 import vo.User;
@@ -10,7 +11,6 @@ public class LoginStatus {
     public static final String User =null;
     User consumer = null;
     Scanner scanner = new Scanner(System.in);
-
     public  User loginInformation(){
          return consumer;
     }
@@ -34,11 +34,21 @@ public class LoginStatus {
         }
         return check;
     }
-    public void reflection(int total , double discount ,int pay){
 
-        }
+    public void productPurchaseRecord(int total, double discountedAmount, int pay){
+        String id= loginInformation().getId();
+        String password = loginInformation().getPassword();
+        String name = loginInformation().getName();
+        String email = loginInformation().getEmail();
+        String phone =loginInformation().getPhoneNumber();
+        String gender = loginInformation().getGender();
+        char grade = loginInformation().getGrade();
+        int sum = loginInformation().getTotal()+total;
+        double discount = loginInformation().getDiscount()+discountedAmount;
+        consumer.setTotal(sum);
+        consumer.setDiscount(discount);
 
-
+    }
 
     public void logout(){
         consumer=null;

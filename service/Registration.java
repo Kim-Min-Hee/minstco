@@ -29,6 +29,30 @@ public class Registration {
         profile.add(m4);
     }
 
+    public void productPurchaseRecord(int total, double discountedAmount, int pay, String id){
+        for(int i=0; i<profile.size();i++){
+            Member member = profile.get(i);
+            if(member.getId().equals(id)){
+                String password = member.getPassword();
+                String name = member.getName();
+                String email = member.getEmail();
+                String phone =member.getPhoneNumber();
+                String gender = member.getGender();
+                char grade = member.getGrade();
+                int sum = member.getTotal()+total;
+                double discount = member.getDiscount()+discountedAmount;
+
+                Member member1 = new Member(id,password,name,email,phone,gender,grade,sum,discount);
+                profile.add(member1);
+                profile.remove(member);
+                merchandise.buyProductDelete();
+                System.out.println(merchandise.buy);
+                System.out.println("Thank you for using");
+                break;
+            }
+        }
+    }
+
 
     public void insertMember() {
         System.out.println("please enter id to use");
@@ -277,12 +301,7 @@ public class Registration {
                     break;
             }
         }
-    public void calculation(double discount) {
-        for(BuyProduct buyProduct : merchandise.buy){
-            double sum = buyProduct.getBuyTotal()*discount;
-        }
 
-    }
 
 }
 
