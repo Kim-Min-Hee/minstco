@@ -61,6 +61,7 @@ public class Merchandise {
     }
 
 
+
     public void selectProduct(String id){
         int select;
         if(id.equals("admin")){
@@ -176,6 +177,7 @@ public class Merchandise {
         }
 
         public void deleteProduct(){
+
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter the product code you want to delete");
             String code = scanner.nextLine();
@@ -200,18 +202,6 @@ public class Merchandise {
                 }
 
             }
-
-
-        }
-        public void buyProductDelete(){
-            System.out.println("%%%%");
-        for(int i=0; i<buy.size();i++){
-            System.out.println("@@@");
-            BuyProduct buyProduct = buy.get(i);
-            System.out.println(buyProduct.getBuyInfor());
-            buy.remove(buyProduct);
-            System.out.println(buyProduct.getBuyInfor());
-        }
 
         }
 

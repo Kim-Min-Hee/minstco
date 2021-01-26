@@ -3,8 +3,10 @@ package service;
 import app.Minstco;
 import vo.BuyProduct;
 import vo.Member;
+import vo.Product;
 import vo.User;
 
+import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -29,100 +31,128 @@ public class Registration {
         profile.add(m4);
     }
 
-    public void productPurchaseRecord(int total, double discountedAmount, int pay, String id){
+    public void productPurchaseRecord(int total, double discountedAmount, String id){
         for(int i=0; i<profile.size();i++){
             Member member = profile.get(i);
             if(member.getId().equals(id)){
+                char grade = 0;
+                if(total<300000){
+                    grade='C';
+                }else if(total>=300000 && total<500000){
+                    grade='B';
+                }else if(total>= 500000){
+                    grade='A';
+                }
                 String password = member.getPassword();
                 String name = member.getName();
                 String email = member.getEmail();
                 String phone =member.getPhoneNumber();
                 String gender = member.getGender();
-                char grade = member.getGrade();
                 int sum = member.getTotal()+total;
                 double discount = member.getDiscount()+discountedAmount;
 
                 Member member1 = new Member(id,password,name,email,phone,gender,grade,sum,discount);
                 profile.add(member1);
                 profile.remove(member);
-                merchandise.buyProductDelete();
-                System.out.println(merchandise.buy);
                 System.out.println("Thank you for using");
                 break;
             }
         }
-    }
+
+        }
+
 
 
     public void insertMember() {
         System.out.println("please enter id to use");
         String id = scanner.nextLine();
-        for (Member m : profile) {
-            if (m.getId().equals(id)) {
-                System.out.println("This information already exists" + "\n" + "Please enter another ID");
-                String reId = scanner.nextLine();
-                if (m.getId().equals(reId)) {
-                    System.out.println("This information already exists");
+        for(Member member : profile){
+            if(id.equals(member.getId())){
+                for(int i = 0; i<3 ;){
+                    System.out.println("enter another ID");
+                    id= scanner.nextLine();
+                    if(id.equals(member.getId())){
+                        if(i==2){
+                            System.out.println("Membership not allowed");
+                            return;
+                        }
+                        i++;
+
+                    }else{
+                        i=3;
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println("enter password to use");
+        String password=scanner.nextLine();
+        System.out.println("enter your name");
+        String name =scanner.nextLine();
+
+        String email = null;
+        int count  =0;
+        for(int y=0; y<3 ; ){
+            System.out.println("enter your email");
+            email = scanner.nextLine();
+            boolean verify = email.contains("@") && email.contains(".");
+            if(!verify){
+                System.out.println("Email format is not correct");
+                if(y==2){
+                    System.out.println("This email is already in use"+"\t"+"Go back to the beginning");
                     return;
                 }
-            } else {
+                y++;
+            }else{
+                for(Member member : profile){
+                    if(member.getEmail().equals(email)){
+                        System.out.println("This email is already in use");
+                        if(y==2){
+                            System.out.println("This email is already in use"+"\t"+"Go back to the beginning");
+                            return;
+                        }
+                        y++;
+                    }else{
+                        count++;
+                    }
+                    if(count==profile.size()){
+                        y=3;
+                        System.out.println("you can use the email");
+                        break;
+                    }
+                }
+            }
+        }
+        String phoneNumber=null;
+        for(int a=0; a<3; ){
+            System.out.println("enter phoneNumber to use");
+            phoneNumber=scanner.nextLine();
+            if(phoneNumber.length()<10 || phoneNumber.length()>=12){
+                System.out.println("The length of the mobile phone number is not correct");
+                if(a==2){
+                    System.out.println("check your phoneNumber");
+                    return;
+                }
+                a++;
+            }else {
+                a=3;
                 break;
             }
         }
 
-        System.out.println("enter password to use");
-        String password = scanner.nextLine();
-
-        System.out.println("write your name");
-        String name = scanner.nextLine();
-
-
-        System.out.println("enter email to use");
-        String email = scanner.nextLine();
-        boolean verify = email.contains("@") && email.contains(".");
-        for (int i = 0; i < 4; i++) {
-            for (Member m : profile) {
-                if (m.getEmail().equals(email)) {
-                    System.out.println("This email address cannot be used" + "\n" + "Please enter another email");
-                    email = scanner.nextLine();
-                    i++;
-                } else if (verify && !m.getEmail().equals(email)) {
-                    break;
-                }
-            }
-            if (!verify) {
-                System.out.println("Email format is incorrect");
-                email = scanner.nextLine();
-            }
-        }
-
-
-        System.out.println("write your phoneNumber");
-        String phoneNumber = scanner.nextLine();
-
-        if (phoneNumber.length() < 12 && phoneNumber.length() > 9) {
-            System.out.println("You entered incorrectly");
-            String rePhoneNumber = scanner.nextLine();
-            phoneNumber = rePhoneNumber;
-        }
-
-        System.out.println("Please select a gender 1. F 2. M");
+        System.out.println("write woman or  man" +"\t"+ "If it’s a man, M " +"\t"+
+                "If it's a woman, F");
         String gender = scanner.nextLine();
-        if (gender.equals("1")) {
-            gender = "F";
-        } else if (gender.equals("2")) {
-            gender = "M";
-        } else {
-            System.out.println("You entered incorrectly");
-        }
+        gender = gender.toUpperCase();
 
-        Member member = new Member(id, password, name, email, phoneNumber, gender, 'C', 0,0);
+        Member member = new Member(id,password,name,email,phoneNumber,gender,'C',0,0);
         profile.add(member);
+
 
     }
     public void selectMember(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Select  1. Member Select All 2. Select by Member Level 3. Search by  ID +\n" +
+        System.out.println("Select  1. Member Select All 2. Select by Member Level 3. Search by  ID "+"\n"+
                 "4. Search by  email 5. Search by  phone number");
         int select = scanner.nextInt();
         if(select==1){
@@ -226,80 +256,147 @@ public class Registration {
 
 
     public void tryLogin(String id, String password) {
-        int idError=0;
         int passwordError=0;
-        for(Member m : profile){
-            if(m.getId().equals(id)){
-                passwordError++;
-            }else if(m.getPassword().equals(password)){
+        int idError = 0;
+        for(Member member : profile){
+            if(id.equals(member.getId())){
+                if(! password.equals(member.getPassword())){
+                    passwordError++;
+                }
+            }else {
                 idError++;
             }
         }
-        if(passwordError<profile.size()){
-            System.out.println("Incorrect password");
-            realignment(id);
-        }
-        if(idError<profile.size()){
-            System.out.println("Incorrect ID");
+        if(idError==profile.size()){
+            System.out.println("ID is wrong");
+            realignment("id",password);
 
+        }
+        if(passwordError<profile.size()){
+            System.out.println("password is wrong");
+            realignment("password",id);
         }
     }
-        public void realignment(String id){
-            System.out.println("choose 1. Re-enter 2. reset your password");
-            int choose = scanner.nextInt();
-
-            switch (choose) {
-                case 1:
-                    int i=0;
-                    while(i<3){
-                        System.out.println("Please re-enter password"+"\n"+"pw : ");
-                        Scanner scanner = new Scanner(System.in);
-                        String password = scanner.nextLine();
-                        for(Member m : profile){
-                            if(m.getPassword().equals(password) && m.getId().equals(id)){
-                                System.out.println("ID and password match ");
-                                return;
-                            }
-                        }
-                        System.out.println("pw is ERROR");
-                        i++;
-                    }
-                    break;
-                case 2:
-                    System.out.println("reset your password ");
-                    System.out.println("write your Id ");
-                    Scanner scanner = new Scanner(System.in);
-                    id = scanner.nextLine();
+        public void realignment(String error, String information){
+        if(error.equals("id")){
+            System.out.println("1. Find ID 2. Back to the beginning");
+            int number  = scanner.nextInt();
+            switch (number){
+                case 1 :
+                    System.out.println("write your name");
+                    scanner.nextLine();
+                    String name = scanner.nextLine();
                     System.out.println("write your email");
                     String email = scanner.nextLine();
-                    System.out.println("choose your gender F or M");
-                    String gender = scanner.nextLine();
-                    for (int y=0; y<profile.size();y++) {
-                        if (profile.get(y).getId().equals(id) && profile.get(y).getEmail().equals(email) && profile.get(y).getGender().equals(gender)) {
-                            System.out.println("you can change password. \n" +
-                                    "Please enter a password to change");
-                            String rePassword = scanner.nextLine();
-                            System.out.println("Re-enter ");
-                            String password= scanner.nextLine();
-                            if(rePassword.equals(password)){
-                                Member member = new Member(id, rePassword,profile.get(y).getName(),email,profile.get(y).getPhoneNumber(),
-                                        gender,profile.get(y).getGrade(),profile.get(y).getTotal(),profile.get(y).getDiscount());
-                                profile.add(member);
-                                profile.remove(y);
-                                if(member.getGrade()=='D'){
-                                    System.out.println("a member who has withdrawn");
-                                    return;
-                                }
-                                break;
-                            }else{
-                                System.out.println("The two passwords you entered do not match");
-                                return;
-                            }
-
+                    for(Member member : profile){
+                        if(member.getName().equals(name) && member.getEmail().equals(email) && member.getPassword().equals(information)){
+                            System.out.println("your id : "+member.getId());
                         }
                     }
                     break;
+                case 2 :
+                    break;
+
+                default :
+                    System.out.println("You made the wrong choice");
             }
+        }else if(error.equals("password")){
+            System.out.println("choose 1.Re-enter 2. Reset");
+            int choose = scanner.nextInt();
+            switch (choose){
+                case 1 :
+                    int i=0;
+                    while (i<3){
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.println("re-enter password");
+                        String password = scanner.nextLine();
+                        int number =0;
+                        for(Member member : profile){
+                            if(member.getPassword().equals(password) && member.getId().equals(information)){
+                                i=2;
+                                System.out.println("password is correct");
+                                return;
+                            }else{
+                                number++;
+                            }
+                            if(number==profile.size()){
+                                i++;
+                                System.out.println("password is not correct");
+                            }
+                        }
+                }
+                case 2 :
+                    System.out.println("reset your password"+"\t"+"write your ID");
+                    String id = scanner.nextLine();
+                    for(int y=0; y<profile.size();y++){
+                        Member member = profile.get(y);
+                        if(member.getId().equals(id)){
+                            System.out.println("write your email");
+                            String email = scanner.nextLine();
+
+                        }else{
+                            
+                        }
+                    }
+
+            }
+        }
+
+//            System.out.println("choose 1. Re-enter 2. reset your password");
+//            int choose = scanner.nextInt();
+//
+//            switch (choose) {
+//                case 1:
+//                    int i=0;
+//                    while(i<3){
+//                        System.out.println("Please re-enter password"+"\n"+"pw : ");
+//                        Scanner scanner = new Scanner(System.in);
+//                        String password = scanner.nextLine();
+//                        for(Member m : profile){
+//                            if(m.getPassword().equals(password) && m.getId().equals(id)){
+//                                System.out.println("ID and password match ");
+//                                return;
+//                            }
+//                        }
+//                        System.out.println("pw is ERROR");
+//                        i++;
+//                    }
+//                    break;
+//                case 2:
+//                    System.out.println("reset your password ");
+//                    System.out.println("write your Id ");
+//                    Scanner scanner = new Scanner(System.in);
+//                    id = scanner.nextLine();
+//                    System.out.println("write your email");
+//                    String email = scanner.nextLine();
+//                    System.out.println("choose your gender F or M");
+//                    String gender = scanner.nextLine();
+//                    for (int y=0; y<profile.size();y++) {
+//                        if (profile.get(y).getId().equals(id) && profile.get(y).getEmail().equals(email) && profile.get(y).getGender().equals(gender)) {
+//                            System.out.println("you can change password. \n" +
+//                                    "Please enter a password to change");
+//                            String rePassword = scanner.nextLine();
+//                            System.out.println("Re-enter ");
+//                            String password= scanner.nextLine();
+//                            if(rePassword.equals(password)){
+//                                Member member = new Member(id, rePassword,profile.get(y).getName(),email,profile.get(y).getPhoneNumber(),
+//                                        gender,profile.get(y).getGrade(),profile.get(y).getTotal(),profile.get(y).getDiscount());
+//                                profile.add(member);
+//                                profile.remove(y);
+//                                if(member.getGrade()=='D'){
+//                                    System.out.println("a member who has withdrawn");
+//                                    return;
+//                                }
+//                                break;
+//                            }else{
+//                                System.out.println("The two passwords you entered do not match");
+//                                return;
+//                            }
+//
+//                        }
+//                    }
+//                    break;
+//            }
         }
 
 

@@ -57,7 +57,7 @@ public class Minstco {
                             } else {
                                 error++;
                             }
-                            if (error >= registration.profile.size()) {
+                            if (error == registration.profile.size()) {
                                 registration.tryLogin(id, password);
                                 break;
                             }
@@ -165,8 +165,8 @@ public class Minstco {
 
                                     }
                                     System.out.println("Total : "+total+"discount : "+discountedAmount+"payment : "+pay);
-                                    //registration.productPurchaseRecord(total,discountedAmount,pay);
-                                    registration.productPurchaseRecord(total,discountedAmount,pay,loginConsumer.getId());
+                                    registration.productPurchaseRecord(total,discountedAmount,loginConsumer.getId());
+                                    merchandise.buy.clear();
                                     break;
                                 }
                                 int count=0;
@@ -180,6 +180,10 @@ public class Minstco {
                                             int price = product.getGoodsPrice();
                                             BuyProduct buyProduct = new BuyProduct(category,code,name,price,amount);
                                             merchandise.buy.add(buyProduct);
+                                            Product product1 = new Product(product.getGoodsCategory(),product.getGoodsCode(),
+                                                    product.getGoodsName(),product.getGoodsPrice(),product.getGoodsQuantity()-amount);
+                                            merchandise.saveGoods.add(product1);
+                                            merchandise.saveGoods.remove(product);
                                             break;
                                         }else{
                                             System.out.println("You have exceeded the number you can purchase");
