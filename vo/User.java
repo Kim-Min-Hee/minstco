@@ -10,26 +10,20 @@ public class User {
     private char grade;
     private String joinDate;
     private int total;
-    private double discount;
+    private int discount;
+    private  double discountRate;
+
 
 
     public String UserInfo(){
-//        if(grade=='A'){
-//            discount=0.1;
-//        }else if(grade=='B'){
-//            discount= 0.05
-//        }else if(grade=='C'){
-//            discount=0.03;
-//        }else{
-//            discount=0;
-//        }
+
         return "User infomation "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+
                 "\t"+"grade : "+grade+"\t"+"total : "+total+"\t"+"discount : "+discount;
     }
 
 
 
-    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total, double discount){
+    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total, int discount){
         this.id = id;
         this.password = password;
         this.name=name;
@@ -43,7 +37,18 @@ public class User {
         System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total+"\t"+discount);
     }
 
-    public double getDiscount() {
+    public double getDiscountRate() {
+        if(grade=='A'){
+            discountRate=0.1;
+        }else if(grade=='B'){
+            discountRate=0.05;
+        }else{
+            discountRate=0.03;
+        }
+        return discountRate;
+    }
+
+    public int getDiscount() {
         return discount;
     }
 
@@ -119,7 +124,11 @@ public class User {
         this.total = total;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
     }
 }

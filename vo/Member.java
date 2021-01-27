@@ -10,11 +10,13 @@ public class Member {
     private char grade;
     private String joinDate;
     private int total;
-    private double discount;
+    private int discount;
+    private  double discountRate;
 
 
 
-    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total, double discount){
+    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade ,
+                  int total, int discount){
     this.id = id;
     this.password = password;
     this.name=name;
@@ -26,18 +28,30 @@ public class Member {
     this.discount= discount;
 
     System.out.println("member : "+"id : "+id+"\t"+"password : "+password+"\t"+"name : "+name+"\t"+"email : "+email+
-            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t"+"total : "+total+"\t"+"discount : "+discount);
+            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t" +"total : "+total+"\t"+"discount : "+discount);
 }
 public String getInfo(){
-    return "member infomation : "+id+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total;
+    return "member infomation  "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+
+            "gender : "+gender+"\t"+"grade : "+ grade+"\t"+"discountRate : "+discountRate+"total : "+total;
 }
 
-    public double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
     public char getGrade() {
+
         return grade;
+    }
+    public double getDiscountRate(char grade) {
+        if(grade=='A'){
+            discountRate=0.1;
+        }else if(grade=='B'){
+            discountRate=0.05;
+        }else{
+            discountRate=0.03;
+        }
+        return discountRate;
     }
 
     public String getJoinDate() {
@@ -108,7 +122,11 @@ public String getInfo(){
         this.gender = gender;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
     }
 }

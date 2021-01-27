@@ -44,7 +44,7 @@ public class LoginStatus {
         String gender = loginInformation().getGender();
         char grade = loginInformation().getGrade();
         int sum = loginInformation().getTotal()+total;
-        double discount = loginInformation().getDiscount()+discountedAmount;
+        int discount = (int)(loginInformation().getDiscount()+discountedAmount);
         consumer.setTotal(sum);
         consumer.setDiscount(discount);
 
@@ -53,19 +53,6 @@ public class LoginStatus {
     public void logout(){
         consumer=null;
         System.out.println(consumer);
-    }
-
-    public void ProductCalculation(){
-        double purchase=0;
-        if(consumer.getGrade()=='A'){
-            purchase = 0.1;
-        }else if(consumer.getGrade()=='B'){
-            purchase = 0.05;
-        }else {
-            purchase = 0.03;
-        }
-        System.out.println("discount : "+purchase);
-
     }
 
 
@@ -98,7 +85,7 @@ public class LoginStatus {
                     String userGender = consumer.getGender();
                     char userGrade = consumer.getGrade();
                     int userTotal = consumer.getTotal();
-                    double userDiscount = consumer.getDiscount();
+                    int userDiscount = consumer.getDiscount();
                     Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
                     System.out.println(consumer.UserInfo());
                     break;
@@ -181,7 +168,7 @@ public class LoginStatus {
             String userGender = consumer.getGender();
             char userGrade = 'D';
             int  userTotal = consumer.getTotal();
-            double userDiscount = consumer.getDiscount();
+            int userDiscount = consumer.getDiscount();
             Member withdrawal = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
             System.out.println(consumer.getId()+" Thank you for using it so far");
             logout();

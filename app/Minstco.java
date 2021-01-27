@@ -49,7 +49,7 @@ public class Minstco {
                                     String userGender = m.getGender();
                                     char userGrade = m.getGrade();
                                     int userTotal = m.getTotal();
-                                    double userDiscount= m.getDiscount();
+                                    int userDiscount= m.getDiscount();
                                     User user = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
                                     loginUser.login(user);
 
@@ -144,14 +144,14 @@ public class Minstco {
                                 scanner.nextLine();
                                 String code = scanner.nextLine();
                                 if (code.equals("x")) {
-                                    double discount = 0;
-                                    if(loginConsumer.getGrade()=='A'){
-                                        discount=0.1;
-                                    }else if(loginConsumer.getGrade()=='B'){
-                                        discount=0.05;
-                                    }else{
-                                        discount=0.03;
-                                    }
+//                                    double discount = 0;
+//                                    if(loginConsumer.getGrade()=='A' ){
+//                                        discount=0.1;
+//                                    }else if(loginConsumer.getGrade()=='B' ){
+//                                        discount=0.05;
+//                                    }else{
+//                                        discount=0.03;
+//                                    }
                                     double discountedAmount=0;
                                     int i=0;
                                     int pay=0;
@@ -159,7 +159,7 @@ public class Minstco {
                                     for(BuyProduct buyProduct : merchandise.buy){
                                         System.out.println(buyProduct.getBuyInfor());
                                         total += buyProduct.getBuyTotal();
-                                        discountedAmount += discount*total;
+                                        discountedAmount += loginConsumer.getDiscountRate()*total;
                                         i= Integer.parseInt(String.valueOf(Math.round(discountedAmount)));
                                         pay = total-i;
 

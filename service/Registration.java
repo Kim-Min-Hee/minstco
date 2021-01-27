@@ -1,6 +1,7 @@
 package service;
 
 import app.Minstco;
+import com.sun.org.apache.xerces.internal.impl.XMLEntityManager;
 import vo.BuyProduct;
 import vo.Member;
 import vo.Product;
@@ -31,33 +32,36 @@ public class Registration {
         profile.add(m4);
     }
 
-    public void productPurchaseRecord(int total, double discountedAmount, String id){
-        for(int i=0; i<profile.size();i++){
-            Member member = profile.get(i);
-            if(member.getId().equals(id)){
-                char grade = 0;
-                if(total<300000){
-                    grade='C';
-                }else if(total>=300000 && total<500000){
-                    grade='B';
-                }else if(total>= 500000){
-                    grade='A';
-                }
-                String password = member.getPassword();
-                String name = member.getName();
-                String email = member.getEmail();
-                String phone =member.getPhoneNumber();
-                String gender = member.getGender();
-                int sum = member.getTotal()+total;
-                double discount = member.getDiscount()+discountedAmount;
 
-                Member member1 = new Member(id,password,name,email,phone,gender,grade,sum,discount);
-                profile.add(member1);
-                profile.remove(member);
-                System.out.println("Thank you for using");
-                break;
+    public void productPurchaseRecord(int total, double discountedAmount, String id) {
+            for(int i=0 ; i<profile.size();i++){
+                Member member = profile.get(i);
+                if(member.getId().equals(id)){
+                    String password = member.getPassword();
+                    String name = member.getName();
+                    String email = member.getEmail();
+                    String phone = member.getPhoneNumber();
+                    String gender = member.getGender();
+                    char grade = member.getGrade();
+                    int sum = member.getTotal() + total;
+                    int discount = (int) (member.getDiscount() + discountedAmount);
+                    if(sum>=500000 && grade != 'A'){
+                        grade='A';
+                        System.out.println("Membership level has been changed"+"\n"+member.getGrade()+"->"+grade);
+                    }else if(sum >300000 && sum<500000 && grade != 'B'){
+                        grade = 'B';
+                        System.out.println("Membership level has been changed"+"\n"+member.getGrade()+"->"+grade);
+                    }
+
+                    Member member1 = new Member(id, password, name, email, phone, gender, grade, sum, discount);
+                    profile.add(member1);
+                    profile.remove(member);
+
+                    System.out.println("Thank you for using");
+                    break;
+                }
+
             }
-        }
 
         }
 
@@ -235,24 +239,37 @@ public class Registration {
 
 
     }
-    public void salesManagement(){
+//    public double discountRate(){
+//        double discountRate=0;
+//        for(Member member : profile){
+//            if(member.getGrade()=='A'){
+//                discountRate=0.1;
+//            }
+//        }
+//    }
+
+
+    public void salesManagement() {
         System.out.println("Select  1.Total sales amount 2. Total amount of discount 3. Grade discount rate adjustment");
         int choose = scanner.nextInt();
-        int sum=0;
-        if(choose==1){
-            for(Member m : profile){
-                sum += m.getTotal();
+        int total = 0;
+        int discount = 0;
+        for (Member member : profile) {
+            total += member.getTotal();
+            discount += member.getDiscount();
+        }
+        if (choose == 1) {
+            System.out.println("Total sales amount : " + total);
+        } else if (choose == 2) {
+            System.out.println("Total amount of discount : " + discount);
+        } else if (choose == 3) {
+            double rate = scanner.nextDouble();
+            for(Member member : profile){
+                if(member.getGrade()=='A'){
+                }
             }
-            System.out.println(sum);
-        }else if(choose==2){
-
-        }else if(choose==3){
-
-        }else{
-
         }
     }
-
 
 
     public void tryLogin(String id, String password) {
@@ -326,77 +343,44 @@ public class Registration {
                         }
                 }
                 case 2 :
-                    System.out.println("reset your password"+"\t"+"write your ID");
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("reset your password"+"\n"+"write your ID");
                     String id = scanner.nextLine();
+                    System.out.println("write your email");
+                    String email= scanner.nextLine();
+                    System.out.println("write your gender F or M");
+                    String gender = scanner.nextLine();
+                    gender = gender.toUpperCase();
+
+                    int count = 0;
                     for(int y=0; y<profile.size();y++){
                         Member member = profile.get(y);
-                        if(member.getId().equals(id)){
-                            System.out.println("write your email");
-                            String email = scanner.nextLine();
+                        if(member.getId().equals(id) && information.equals(id) && member.getEmail().equals(email) && member.getGender().equals(gender)){
+                            System.out.println("you can change password");
+                            String password =scanner.nextLine();
+                            System.out.println("re-enter password");
+                            String rePassword = scanner.nextLine();
+                            if(password.equals(rePassword)){
+                                System.out.println("Password has been changed");
+
+                                Member member1 = new Member(id,password, member.getName(), email,member.getPhoneNumber(),gender,member.getGrade(),
+                                        member.getTotal(),member.getDiscount());
+                                profile.add(member1);
+                                profile.remove(member);
+                                break;
+                            }
 
                         }else{
-                            
+                           count++;
+                        }
+                        if(count == profile.size()){
+                            System.out.println("It is difficult to change the password because the information does not match");
                         }
                     }
 
             }
         }
 
-//            System.out.println("choose 1. Re-enter 2. reset your password");
-//            int choose = scanner.nextInt();
-//
-//            switch (choose) {
-//                case 1:
-//                    int i=0;
-//                    while(i<3){
-//                        System.out.println("Please re-enter password"+"\n"+"pw : ");
-//                        Scanner scanner = new Scanner(System.in);
-//                        String password = scanner.nextLine();
-//                        for(Member m : profile){
-//                            if(m.getPassword().equals(password) && m.getId().equals(id)){
-//                                System.out.println("ID and password match ");
-//                                return;
-//                            }
-//                        }
-//                        System.out.println("pw is ERROR");
-//                        i++;
-//                    }
-//                    break;
-//                case 2:
-//                    System.out.println("reset your password ");
-//                    System.out.println("write your Id ");
-//                    Scanner scanner = new Scanner(System.in);
-//                    id = scanner.nextLine();
-//                    System.out.println("write your email");
-//                    String email = scanner.nextLine();
-//                    System.out.println("choose your gender F or M");
-//                    String gender = scanner.nextLine();
-//                    for (int y=0; y<profile.size();y++) {
-//                        if (profile.get(y).getId().equals(id) && profile.get(y).getEmail().equals(email) && profile.get(y).getGender().equals(gender)) {
-//                            System.out.println("you can change password. \n" +
-//                                    "Please enter a password to change");
-//                            String rePassword = scanner.nextLine();
-//                            System.out.println("Re-enter ");
-//                            String password= scanner.nextLine();
-//                            if(rePassword.equals(password)){
-//                                Member member = new Member(id, rePassword,profile.get(y).getName(),email,profile.get(y).getPhoneNumber(),
-//                                        gender,profile.get(y).getGrade(),profile.get(y).getTotal(),profile.get(y).getDiscount());
-//                                profile.add(member);
-//                                profile.remove(y);
-//                                if(member.getGrade()=='D'){
-//                                    System.out.println("a member who has withdrawn");
-//                                    return;
-//                                }
-//                                break;
-//                            }else{
-//                                System.out.println("The two passwords you entered do not match");
-//                                return;
-//                            }
-//
-//                        }
-//                    }
-//                    break;
-//            }
         }
 
 
