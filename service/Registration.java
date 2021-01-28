@@ -20,12 +20,13 @@ public class Registration {
     Merchandise merchandise = new Merchandise();
     public Registration() {
         Member m1 = new Member("xldkah", "minhee", "kim-min-hee", "xldkah2415@naver.com", "01012342415",
-                "F", 'A', 100000,0);
+                "F", 'A',0.1, 100000,0);
         Member m2 = new Member("manju", "hyungtaek", "ryu-hyung-taek", "xldkah4548@hanmail.net", "01045672812",
-                "M", 'D', 0,0);
-        Member m3 = new Member("q","q","q","xldkah@naver.com","11111111111","F",'B',0,0);
+                "M", 'C',0.03, 0,0);
+        Member m3 = new Member("q","q","q","xldkah@naver.com","11111111111",
+                "F",'B',0.05,0,0);
         Member m4 = new Member("admin","admin","admin","admin@google.com","1234567890","F",
-                'A',100000,0);
+                'A',0.1,100000,0);
         profile.add(m1);
         profile.add(m2);
         profile.add(m3);
@@ -43,6 +44,7 @@ public class Registration {
                     String phone = member.getPhoneNumber();
                     String gender = member.getGender();
                     char grade = member.getGrade();
+                    double discountRate = member.getDiscountRate();
                     int sum = member.getTotal() + total;
                     int discount = (int) (member.getDiscount() + discountedAmount);
                     if(sum>=500000 && grade != 'A'){
@@ -53,7 +55,7 @@ public class Registration {
                         System.out.println("Membership level has been changed"+"\n"+member.getGrade()+"->"+grade);
                     }
 
-                    Member member1 = new Member(id, password, name, email, phone, gender, grade, sum, discount);
+                    Member member1 = new Member(id, password, name, email, phone, gender, grade,discountRate, sum, discount);
                     profile.add(member1);
                     profile.remove(member);
 
@@ -149,7 +151,7 @@ public class Registration {
         String gender = scanner.nextLine();
         gender = gender.toUpperCase();
 
-        Member member = new Member(id,password,name,email,phoneNumber,gender,'C',0,0);
+        Member member = new Member(id,password,name,email,phoneNumber,gender,'C',0.03,0,0);
         profile.add(member);
 
 
@@ -229,7 +231,8 @@ public class Registration {
                     System.out.println("Write down the grade you want to change");
                     String y = scanner.nextLine();
                     char grade = y.charAt(0);
-                    Member member = new Member(m.getId(),m.getPassword(),m.getName(),m.getEmail(),m.getPhoneNumber(),m.getGender(),grade,m.getTotal(),m.getDiscount());
+                    Member member = new Member(m.getId(),m.getPassword(),m.getName(),m.getEmail(),m.getPhoneNumber(),m.getGender(),grade,m.getDiscountRate(),
+                            m.getTotal(),m.getDiscount());
                     profile.add(member);
                     profile.remove(m);
                 }
@@ -239,14 +242,6 @@ public class Registration {
 
 
     }
-//    public double discountRate(){
-//        double discountRate=0;
-//        for(Member member : profile){
-//            if(member.getGrade()=='A'){
-//                discountRate=0.1;
-//            }
-//        }
-//    }
 
 
     public void salesManagement() {
@@ -254,22 +249,82 @@ public class Registration {
         int choose = scanner.nextInt();
         int total = 0;
         int discount = 0;
+        double rateA = 0;
+        double rateB = 0;
+        double rateC = 0;
         for (Member member : profile) {
             total += member.getTotal();
             discount += member.getDiscount();
-        }
-        if (choose == 1) {
-            System.out.println("Total sales amount : " + total);
-        } else if (choose == 2) {
-            System.out.println("Total amount of discount : " + discount);
-        } else if (choose == 3) {
-            double rate = scanner.nextDouble();
-            for(Member member : profile){
-                if(member.getGrade()=='A'){
-                }
+            if (member.getGrade() == 'A') {
+                rateA = member.getDiscountRate();
+            } else if (member.getGrade() == 'B') {
+                rateB = member.getDiscountRate();
+            } else if (member.getGrade() == 'C') {
+                rateC = member.getDiscountRate();
             }
         }
-    }
+        switch (choose) {
+            case 1:
+                System.out.println("Total  : " + total);
+                break;
+
+            case 2:
+                System.out.println("Discount : " + discount);
+                break;
+
+            case 3:
+                int count=0;
+                System.out.println("Current Class A discount rate : " + rateA +"\n"+
+                        "Current Class B discount rate : "+rateB +"\n"+ "Current Class C discount rate : "+rateC);
+                System.out.println("write in the order of discount rate to change from A to C");
+                while(count<=3){
+                    double changeA =0;
+                    double changeB =0;
+                    double changeC =0;
+                    double change =0;
+                    char grade = 0;
+                   if(count==0){
+                       changeA = scanner.nextDouble();
+                           grade = 'A';
+                           change = changeA;
+                   }else if(count ==1){
+                       changeB = scanner.nextDouble();
+                       if(changeA>changeB){
+                           grade ='B';
+                           change = changeB;
+                       }else{
+                           count=3;
+                       }
+                   }else if(count==2){
+                       changeC = scanner.nextDouble();
+                       if(changeC <changeB && changeC < changeA){
+                           grade='C';
+                           change= changeC;
+                       }else{
+                           count=3;
+                       }
+
+                   }
+
+                   for(int i=0; i<profile.size();i++){
+                       Member member = profile.get(i);
+                       if(member.getGrade()==grade){
+                           Member member1 = new Member(member.getId(), member.getPassword(), member.getName(), member.getEmail(), member.getPhoneNumber()
+                                    , member.getGender(), member.getGrade(), change, member.getTotal(), member.getDiscount());
+                       }
+                   }
+                   if(count==3){
+                       System.out.println("It is not possible to set the discount rate because the discount rate is lower than the lower rate discount rate");
+                       return;
+                   }
+                   count++;
+
+            }
+
+                }
+
+
+        }
 
 
     public void tryLogin(String id, String password) {
@@ -364,7 +419,7 @@ public class Registration {
                                 System.out.println("Password has been changed");
 
                                 Member member1 = new Member(id,password, member.getName(), email,member.getPhoneNumber(),gender,member.getGrade(),
-                                        member.getTotal(),member.getDiscount());
+                                        member.getDiscountRate(),member.getTotal(),member.getDiscount());
                                 profile.add(member1);
                                 profile.remove(member);
                                 break;
@@ -385,5 +440,7 @@ public class Registration {
 
 
 }
+
+
 
 

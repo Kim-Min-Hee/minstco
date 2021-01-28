@@ -84,9 +84,11 @@ public class LoginStatus {
                     String userPhoneNumber = consumer.getPhoneNumber();
                     String userGender = consumer.getGender();
                     char userGrade = consumer.getGrade();
+                    double userDiscountRate = consumer.getDiscountRate();
                     int userTotal = consumer.getTotal();
                     int userDiscount = consumer.getDiscount();
-                    Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
+                    Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,userDiscountRate,
+                            userTotal,userDiscount);
                     System.out.println(consumer.UserInfo());
                     break;
                 case 2 :
@@ -112,9 +114,11 @@ public class LoginStatus {
                                  userPhoneNumber = consumer.getPhoneNumber();
                                  userGender = consumer.getGender();
                                  userGrade = consumer.getGrade();
+                                 userDiscountRate = consumer.getDiscountRate();
                                  userTotal = consumer.getTotal();
                                  userDiscount = consumer.getDiscount();
-                                Member emailChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
+                                Member emailChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,
+                                        userDiscountRate,userTotal,userDiscount);
                                 System.out.println(consumer.UserInfo());
                             }
                         }
@@ -136,9 +140,11 @@ public class LoginStatus {
                         userPhoneNumber = phoneNumber;
                         userGender = consumer.getGender();
                         userGrade = consumer.getGrade();
+                        userDiscountRate = consumer.getDiscountRate();
                         userTotal = consumer.getTotal();
                         userDiscount = consumer.getDiscount();
-                        Member phoneNumberChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
+                        Member phoneNumberChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,
+                                userDiscountRate,userTotal,userDiscount);
 
                         System.out.println(consumer.UserInfo());
                     }else{
@@ -167,9 +173,11 @@ public class LoginStatus {
             String userPhoneNumber = consumer.getPhoneNumber();
             String userGender = consumer.getGender();
             char userGrade = 'D';
+            double userDiscountRate=0;
             int  userTotal = consumer.getTotal();
             int userDiscount = consumer.getDiscount();
-            Member withdrawal = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
+            Member withdrawal = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userDiscountRate,
+                    userTotal,userDiscount);
             System.out.println(consumer.getId()+" Thank you for using it so far");
             logout();
 

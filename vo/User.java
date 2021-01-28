@@ -23,7 +23,8 @@ public class User {
 
 
 
-    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade , int total, int discount){
+    public User(String id , String password, String name , String email, String phoneNumber , String gender, char grade ,double discountRate,
+                int total, int discount){
         this.id = id;
         this.password = password;
         this.name=name;
@@ -31,6 +32,7 @@ public class User {
         this.phoneNumber=phoneNumber;
         this.gender = gender;
         this.grade = grade;
+        this.discountRate = getDiscountRate();
         this.total = total;
         this.discount = discount;
 

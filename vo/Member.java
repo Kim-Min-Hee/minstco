@@ -15,7 +15,7 @@ public class Member {
 
 
 
-    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade ,
+    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade ,double discountRate,
                   int total, int discount){
     this.id = id;
     this.password = password;
@@ -24,11 +24,13 @@ public class Member {
     this.phoneNumber=phoneNumber;
     this.gender = gender;
     this.grade = grade;
+    this.discountRate = discountRate;
     this.total = total;
     this.discount= discount;
 
     System.out.println("member : "+"id : "+id+"\t"+"password : "+password+"\t"+"name : "+name+"\t"+"email : "+email+
-            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t" +"total : "+total+"\t"+"discount : "+discount);
+            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t" +"discountRate : "+discountRate+
+            "total : "+total+"\t"+"discount : "+discount);
 }
 public String getInfo(){
     return "member infomation  "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+
@@ -43,14 +45,7 @@ public String getInfo(){
 
         return grade;
     }
-    public double getDiscountRate(char grade) {
-        if(grade=='A'){
-            discountRate=0.1;
-        }else if(grade=='B'){
-            discountRate=0.05;
-        }else{
-            discountRate=0.03;
-        }
+    public double getDiscountRate() {
         return discountRate;
     }
 
@@ -126,7 +121,14 @@ public String getInfo(){
         this.discount = discount;
     }
 
-    public void setDiscountRate(double discountRate) {
-        this.discountRate = discountRate;
+    public void setDiscountRate(char grade) {
+        if(grade=='A'){
+            this.discountRate = 0.1;
+        }else if(grade=='B'){
+            this.discountRate =0.05;
+        }else{
+            this.discountRate=0.03;
+        }
+
     }
 }

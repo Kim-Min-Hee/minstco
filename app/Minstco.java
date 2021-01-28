@@ -48,9 +48,11 @@ public class Minstco {
                                     String userPhoneNumber = m.getPhoneNumber();
                                     String userGender = m.getGender();
                                     char userGrade = m.getGrade();
+                                    double userDiscountRate = m.getDiscountRate();
                                     int userTotal = m.getTotal();
                                     int userDiscount= m.getDiscount();
-                                    User user = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade, userTotal,userDiscount);
+                                    User user = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,
+                                            userDiscountRate,userTotal,userDiscount);
                                     loginUser.login(user);
 
 
@@ -58,7 +60,7 @@ public class Minstco {
                                 error++;
                             }
                             if (error == registration.profile.size()) {
-                                registration.tryLogin(id, password);
+                                registration.tryLogin(id,password);
                                 break;
                             }
 
@@ -104,7 +106,6 @@ public class Minstco {
 
                         case 3 :
                             registration.salesManagement();
-
                     }
                     return;
                 }else{

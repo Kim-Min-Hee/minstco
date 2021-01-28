@@ -61,7 +61,6 @@ public class Merchandise {
     }
 
 
-
     public void selectProduct(String id){
         int select;
         if(id.equals("admin")){
