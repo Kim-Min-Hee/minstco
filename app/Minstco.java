@@ -17,18 +17,22 @@ public class Minstco {
         LoginStatus loginUser = new LoginStatus();
         Merchandise merchandise = new Merchandise();
         while (true) {
+
             if (!loginUser.isLogin()) {
+
                 System.out.println("choose number " + "\n" + "1. registration 2. login ");
+
                 Scanner scanner = new Scanner(System.in);
                 int choose = scanner.nextInt();
+
                 switch (choose) {
+
                     case 1:
                         System.out.println("Would you like to become a member?" + "\t" + "1. Yes 2. No");
                         int extra = scanner.nextInt();
+
                         if (extra == 1) {
                             registration.insertMember();
-                        } else {
-                            return;
                         }
                         break;
 
@@ -36,9 +40,12 @@ public class Minstco {
                         System.out.println("Please enter ID to log in");
                         scanner.nextLine();
                         String id = scanner.nextLine();
+
                         System.out.println("Please enter password to log in");
                         String password = scanner.nextLine();
+
                         int error = 0;
+
                         for (Member m : registration.profile) {
                             if (m.getId().equals(id) && m.getPassword().equals(password)) {
                                     String userid = m.getId();
@@ -51,10 +58,10 @@ public class Minstco {
                                     double userDiscountRate = m.getDiscountRate();
                                     int userTotal = m.getTotal();
                                     int userDiscount= m.getDiscount();
+
                                     User user = new User(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,
                                             userDiscountRate,userTotal,userDiscount);
                                     loginUser.login(user);
-
 
                             } else {
                                 error++;
@@ -63,16 +70,16 @@ public class Minstco {
                                 registration.tryLogin(id,password);
                                 break;
                             }
-
                         }
                 }
-
-            } else {
+            } else if(loginUser.isLogin()){
                 Scanner scanner = new Scanner(System.in);
                 User loginConsumer = loginUser.loginInformation();
+
                 if(loginConsumer.getId().equals("admin")){
                     System.out.println("choose 1. Product management 2. Member management 3. Sales management");
                     int number = scanner.nextInt();
+
                     switch (number){
                         case 1 :
                             System.out.println("choose 1. New product registration 2. Select Product list 3. Amend product information 4. Delete product ");
@@ -93,24 +100,28 @@ public class Minstco {
                         case 2 :
                             System.out.println("1. Select Member 2. Member information modification");
                             int select = scanner.nextInt();
+
                             if(select==1){
                                 registration.selectMember();
                             }else if(select==2){
                                 System.out.println("Write down the ID you want to edit");
                                 scanner.nextLine();
-                                String id = scanner.nextLine();
-                                registration.informationModification(id);
+                                String editId = scanner.nextLine();
+                                registration.informationModification(editId,loginConsumer.getPassword());
                             }else{
                                 System.out.println("Wrong choice");
                             }
+                            break;
 
                         case 3 :
                             registration.salesManagement();
+                            break;
                     }
-                    return;
-                }else{
+ //                   return;
+                }else if(! loginConsumer.getId().equals("admin")){
                     System.out.println("choose 1. My information management 2. Select Product 3. Purchase of products 4. logout");
                     int choose = scanner.nextInt();
+
                     switch (choose) {
                         case 1:
                             System.out.println("choose 1. View my information details 2. Edit my information 3. Membership withdrawal 4. logout");
@@ -135,71 +146,15 @@ public class Minstco {
                                 System.out.println("Wrong choice");
                             }
                             break;
+
                         case 2:
                             merchandise.selectProduct(loginConsumer.getId());
                             break;
+
                         case 3 :
-                            while (true) {
-                                System.out.println("If you want to stop buying, please click (x)");
-                                System.out.println("Enter the product code you want to buy");
-                                scanner.nextLine();
-                                String code = scanner.nextLine();
-                                if (code.equals("x")) {
-//                                    double discount = 0;
-//                                    if(loginConsumer.getGrade()=='A' ){
-//                                        discount=0.1;
-//                                    }else if(loginConsumer.getGrade()=='B' ){
-//                                        discount=0.05;
-//                                    }else{
-//                                        discount=0.03;
-//                                    }
-                                    double discountedAmount=0;
-                                    int i=0;
-                                    int pay=0;
-                                    int total=0;
-                                    for(BuyProduct buyProduct : merchandise.buy){
-                                        System.out.println(buyProduct.getBuyInfor());
-                                        total += buyProduct.getBuyTotal();
-                                        discountedAmount += loginConsumer.getDiscountRate()*total;
-                                        i= Integer.parseInt(String.valueOf(Math.round(discountedAmount)));
-                                        pay = total-i;
+                            merchandise.selectProductTest(loginUser.loginInformation().getDiscountRate(),loginConsumer.getId());
 
-                                    }
-                                    System.out.println("Total : "+total+"discount : "+discountedAmount+"payment : "+pay);
-                                    registration.productPurchaseRecord(total,discountedAmount,loginConsumer.getId());
-                                    merchandise.buy.clear();
-                                    break;
-                                }
-                                int count=0;
-                                for(Product product : merchandise.saveGoods){
-                                    if(product.getGoodsCode().equals(code)){
-                                        System.out.println("Please fill in the number of purchases");
-                                        int amount = scanner.nextInt();
-                                        if(amount <= product.getGoodsQuantity()){
-                                            String category = product.getGoodsCategory();
-                                            String name = product.getGoodsName();
-                                            int price = product.getGoodsPrice();
-                                            BuyProduct buyProduct = new BuyProduct(category,code,name,price,amount);
-                                            merchandise.buy.add(buyProduct);
-                                            Product product1 = new Product(product.getGoodsCategory(),product.getGoodsCode(),
-                                                    product.getGoodsName(),product.getGoodsPrice(),product.getGoodsQuantity()-amount);
-                                            merchandise.saveGoods.add(product1);
-                                            merchandise.saveGoods.remove(product);
-                                            break;
-                                        }else{
-                                            System.out.println("You have exceeded the number you can purchase");
-                                        }
-
-                                    }else{
-                                        count++;
-                                    }
-                                    if(count==merchandise.saveGoods.size()){
-                                        System.out.println("No such code");
-                                    }
-                                }
-
-
-                            }
+                            break;
 
                         case 4:
                             System.out.println("You are logged out");

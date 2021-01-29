@@ -32,21 +32,16 @@ public class User {
         this.phoneNumber=phoneNumber;
         this.gender = gender;
         this.grade = grade;
-        this.discountRate = getDiscountRate();
+        this.discountRate = discountRate;
         this.total = total;
         this.discount = discount;
 
-        System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+total+"\t"+discount);
+        System.out.println("User : "+id+"\t"+password+"\t"+name+"\t"+email+"\t"+phoneNumber+"\t"+gender+"\t"+grade+"\t"+discountRate+"\t"+total+"\t"+discount);
     }
 
+
     public double getDiscountRate() {
-        if(grade=='A'){
-            discountRate=0.1;
-        }else if(grade=='B'){
-            discountRate=0.05;
-        }else{
-            discountRate=0.03;
-        }
+
         return discountRate;
     }
 

@@ -35,128 +35,108 @@ public class LoginStatus {
         return check;
     }
 
-    public void productPurchaseRecord(int total, double discountedAmount, int pay){
-        String id= loginInformation().getId();
-        String password = loginInformation().getPassword();
-        String name = loginInformation().getName();
-        String email = loginInformation().getEmail();
-        String phone =loginInformation().getPhoneNumber();
-        String gender = loginInformation().getGender();
-        char grade = loginInformation().getGrade();
-        int sum = loginInformation().getTotal()+total;
-        int discount = (int)(loginInformation().getDiscount()+discountedAmount);
-        consumer.setTotal(sum);
-        consumer.setDiscount(discount);
-
-    }
-
     public void logout(){
-        consumer=null;
+        this.consumer=null;
         System.out.println(consumer);
     }
 
-
     public void informationDetails(){
             System.out.println(consumer.UserInfo());
-
     }
 
     public void editInformation(){
-
+        Registration registration = new Registration();
         System.out.println("write your password");
         Scanner scanner = new Scanner(System.in);
         String password = scanner.nextLine();
-        Registration registration = new Registration();
+
         if(consumer.getPassword().equals(password)){
             System.out.println("You can edit your information / Select the information you want to edit"+"\n"
                     +"1. name 2. email 3. phoneNumber ");
             int select = scanner.nextInt();
+            String name =null;
+            String email = null;
+            String phone = null;
             switch(select){
                 case 1 :
                     System.out.println("Please write the name to change");
                     scanner.nextLine();
-                    String name = scanner.nextLine();
-                    consumer.setName(name);
-                    String userid = consumer.getId();
-                    String userPassword = consumer.getPassword();
-                    String userName = name;
-                    String userEmail = consumer.getEmail();
-                    String userPhoneNumber = consumer.getPhoneNumber();
-                    String userGender = consumer.getGender();
-                    char userGrade = consumer.getGrade();
-                    double userDiscountRate = consumer.getDiscountRate();
-                    int userTotal = consumer.getTotal();
-                    int userDiscount = consumer.getDiscount();
-                    Member nameChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,userDiscountRate,
-                            userTotal,userDiscount);
-                    System.out.println(consumer.UserInfo());
+                    name = scanner.nextLine();
                     break;
-                case 2 :
-                    System.out.println("Please write the email to change");
-                    scanner.nextLine();
-                    String email = scanner.nextLine();
-                    boolean verify = email.contains("@") && email.contains(".");
-                    int check = 0;
-                    if(verify){
-                        for(Member m : registration.profile){
-                            if(m.getEmail().equals(email)){
-                                System.out.println("the email can not use");
-                            }else{
-                                check++;
-                            }
-                            if(check == registration.profile.size()){
-                                System.out.println("Email address that can be used");
-                                consumer.setEmail(email);
-                                userid = consumer.getId();
-                                 userPassword = consumer.getPassword();
-                                 userName = consumer.getName();
-                                 userEmail = email;
-                                 userPhoneNumber = consumer.getPhoneNumber();
-                                 userGender = consumer.getGender();
-                                 userGrade = consumer.getGrade();
-                                 userDiscountRate = consumer.getDiscountRate();
-                                 userTotal = consumer.getTotal();
-                                 userDiscount = consumer.getDiscount();
-                                Member emailChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,
-                                        userDiscountRate,userTotal,userDiscount);
-                                System.out.println(consumer.UserInfo());
-                            }
-                        }
 
-                    }else{
-                        System.out.println("Email format is incorrect");
+                case 2 :
+                    int check = 0;
+                    int count  =0;
+                    while(count<3){
+                        System.out.println("Please write the email to change");
+                        scanner.nextLine();
+                        email = scanner.nextLine();
+
+                        boolean verify = email.contains("@") && email.contains(".");
+                        if(verify){
+                            for(Member m : registration.profile){
+                                if(m.getEmail().equals(email)){
+                                    System.out.println("the email can not use");
+                                    break;
+                                }else{
+                                    check++;
+                                }
+                                if(check == registration.profile.size()){
+                                    count=2;
+                                    System.out.println("Email address that can be used");
+                                }
+                                count++;
+                            }
+
+                        }else{
+                            System.out.println("Email format is incorrect");
+                        }
                     }
+
                     break;
                 case 3 :
                     System.out.println("Please write the phoneNumber to change");
                     scanner.nextLine();
                     String phoneNumber = scanner.nextLine();
                     if(phoneNumber.length()<12 && phoneNumber.length()>9){
-                        consumer.setPhoneNumber(phoneNumber);
-                        userid = consumer.getId();
-                        userPassword = consumer.getPassword();
-                        userName = consumer.getName();
-                        userEmail = consumer.getEmail();
-                        userPhoneNumber = phoneNumber;
-                        userGender = consumer.getGender();
-                        userGrade = consumer.getGrade();
-                        userDiscountRate = consumer.getDiscountRate();
-                        userTotal = consumer.getTotal();
-                        userDiscount = consumer.getDiscount();
-                        Member phoneNumberChange = new Member(userid, userPassword, userName, userEmail, userPhoneNumber, userGender, userGrade,
-                                userDiscountRate,userTotal,userDiscount);
-
-                        System.out.println(consumer.UserInfo());
+                        phone = phoneNumber;
                     }else{
                         System.out.println("Cell phone number format is incorrect");
+
+                    }
+                    break;
+            }
+            for(int i=0 ; i<registration.profile.size();i++){
+                Member member = registration.profile.get(i);
+                if(consumer.getId().equals(member.getId())){
+
+                    if(name != null){
+                        Member member1 = new Member(member.getId(),member.getPassword(),name,member.getEmail(),member.getPhoneNumber(),
+                                member.getGender(),member.getGrade(),member.getDiscountRate(),member.getTotal(),member.getDiscount());
+                        registration.profile.add(member1);
+                        registration.profile.remove(member);
+                            break;
+                    }else if(email != null){
+                        Member member1 = new Member(member.getId(),member.getPassword(),member.getName(),email,member.getPhoneNumber(),
+                                member.getGender(),member.getGrade(),member.getDiscountRate(),member.getTotal(),member.getDiscount());
+                        registration.profile.add(member1);
+                        registration.profile.remove(member);
+                        break;
+                    }else if(phone != null){
+                        Member member1 = new Member(member.getId(),member.getPassword(),member.getName(),member.getEmail(),phone,
+                                member.getGender(),member.getGrade(),member.getDiscountRate(),member.getTotal(),member.getDiscount());
+                        registration.profile.add(member1);
+                        registration.profile.remove(member);
+                        break;
                     }
 
-
-
+                }
             }
         }else {
             System.out.println("Passwords do not match");
         }
+
+
 
     }
     public void MembershipWithdrawal(){
