@@ -117,7 +117,6 @@ public class Minstco {
                             registration.salesManagement();
                             break;
                     }
- //                   return;
                 }else if(! loginConsumer.getId().equals("admin")){
                     System.out.println("choose 1. My information management 2. Select Product 3. Purchase of products 4. logout");
                     int choose = scanner.nextInt();
@@ -126,20 +125,28 @@ public class Minstco {
                         case 1:
                             System.out.println("choose 1. View my information details 2. Edit my information 3. Membership withdrawal 4. logout");
                             int number = scanner.nextInt();
-
+                            scanner.nextLine();
                             if (number == 1) {
                                 System.out.println("write your password");
                                 String password =scanner.nextLine();
                                 if(password.equals(loginConsumer.getPassword())){
-                                    loginUser.informationDetails();
+                                    registration.consumerInformationDetails(loginConsumer.getId(),loginConsumer.getPassword());
+                                }else{
+                                    System.out.println("passwords are Wrong");
+                                }
+                                break;
+                            } else if (number == 2) {
+                                System.out.println("write your password");
+                                String password = scanner.nextLine();
+                                if(loginConsumer.getPassword().equals(password)){
+                                    registration.editConsumerInformation(loginConsumer.getId());
                                 }else{
                                     System.out.println("passwords are Wrong");
                                 }
 
-                            } else if (number == 2) {
-                                loginUser.editInformation();
                             }else if(number==3){
-                                loginUser.MembershipWithdrawal();
+                                registration.MembershipWithdrawal(loginConsumer.getId(),loginConsumer.getPassword());
+                                loginUser.logout();
                             }else if(number==4){
                                 loginUser.logout();
                             }else{
@@ -152,7 +159,8 @@ public class Minstco {
                             break;
 
                         case 3 :
-                            merchandise.selectProductTest(loginUser.loginInformation().getDiscountRate(),loginConsumer.getId());
+                            System.out.println(loginUser.loginInformation().getDiscountRate());
+                            merchandise.selectProduct(loginUser.loginInformation().getDiscountRate(),loginConsumer.getId(),loginConsumer.getGrade());
 
                             break;
 

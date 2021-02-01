@@ -122,13 +122,6 @@ public String getInfo(){
     }
 
     public void setDiscountRate(char grade) {
-        if(grade=='A'){
-            this.discountRate = 0.1;
-        }else if(grade=='B'){
-            this.discountRate =0.05;
-        }else{
-            this.discountRate=0.03;
-        }
-
+       this.discountRate = discountRate;
     }
 }

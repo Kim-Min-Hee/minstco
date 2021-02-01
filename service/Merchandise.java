@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Merchandise {
     private static final char[] Merchadise= null;
@@ -17,14 +18,15 @@ public class Merchandise {
     Scanner scanner = new Scanner(System.in);
     LoginStatus loginStatus = new LoginStatus();
     Registration registration = new Registration();
+
     public Merchandise() {
         Product goods1 = new Product("food", "F1", "goraebab", 1200, 100);
         Product goods2 = new Product("food", "F2", "pork", 10000, 5);
-        Product goods3 = new Product("food", "F3", "Jjolmyeon", 5000, 0);
+        Product goods3 = new Product("food", "F3", "jjolmyeon", 5000, 0);
         Product goods4 = new Product("food", "F4", "ice Americano", 5100, 1000);
-        Product goods5 = new Product("dress", "D1", "Kangol", 53000, 20);
+        Product goods5 = new Product("dress", "D1", "kangol", 53000, 20);
         Product goods6 = new Product("dress", "D2", "adidas", 100000, 40);
-        Product goods7 = new Product("dress", "D3", "Discovery", 30000, 23);
+        Product goods7 = new Product("dress", "D3", "discovery", 30000, 23);
         Product goods8 = new Product("electromechanical", "E1", "appleLaptop", 3400000, 53);
         Product goods9 = new Product("electromechanical", "E2", "appleWatch", 500000, 77);
         Product goods10 = new Product("electromechanical", "E3", "iPad", 1200000, 5);
@@ -42,8 +44,11 @@ public class Merchandise {
 
     }
 
-    public void selectProductTest(double discountRate,String id){
-
+    public void selectProduct(double discountRate, String id, char loginGrade){
+        System.out.println(discountRate);
+        for(Product product : saveGoods){
+            System.out.println(product.getInfor());
+        }
         while (true) {
             System.out.println("If you want to stop buying, please click (x)");
             System.out.println("Enter the product code you want to buy");
@@ -54,17 +59,26 @@ public class Merchandise {
                 int discount=0;
                 int pay=0;
                 int total=0;
-
+                char grade = 0;
                 for(BuyProduct buyProduct : buy){
                     System.out.println(buyProduct.getBuyInfor());
                     total += buyProduct.getBuyTotal();
                     discount = (int)(discountRate*total);
                     pay = total-discount;
                 }
-
                 System.out.println("Total : "+total+"discount : "+discount+"payment : "+pay);
+                
+                if(total>=500000 && loginGrade != 'A'){
+                    grade='A';
+                    discountRate = 0.1;
+                    System.out.println("Membership level has been changed"+"\n"+loginGrade+"->"+grade);
+                }else if(total >300000 && total<500000 && loginGrade != 'B'){
+                    grade = 'B';
+                    discountRate=0.05;
+                    System.out.println("Membership level has been changed"+"\n"+loginGrade+"->"+grade);
+                }
 
-                registration.productPurchaseRecord(id,total,discount);
+                registration.productPurchaseRecord(id,total,discount,grade,discountRate);
 
                 buy.clear();
                 break;
@@ -139,37 +153,38 @@ public class Merchandise {
                 System.out.println(saveGoods.get(i).getInfor());
             }
 
-        }else if(select==2){
-
-            System.out.println("Search products by category 1. food 2. dress 3. electromechanical");
+        }else if(select==2) {
+            System.out.println("search product by category");
             scanner.nextLine();
-            String choose = scanner.nextLine();
-            String category= null;
-
-            if(choose.equals("food") || choose.equals("1")) {
-                category = "food";
-            }else if(choose.equals("dress") || choose.equals("2")){
-                category= "dress";
-            }else if(choose.equals("electromechanical") || choose.equals("3")){
-                category="electromechanical";
-            }else{
-                System.out.println("Wrong choice");
-            }
-
+            String category = scanner.nextLine();
+            int count=0;
             for(Product product : saveGoods){
-                if(product.getGoodsCategory().equals(category)){
+                if(product.getGoodsCategory().contains(category)){
                     System.out.println(product.getInfor());
+                }else{
+                    count++;
+                }
+                if(count==saveGoods.size()){
+                    System.out.println("There is no category");
                 }
             }
+
+
 
         }else if(select==3){
             System.out.println("Search by product name");
             scanner.nextLine();
             String name = scanner.nextLine();
-
+            name = name.toLowerCase();
+            int number = 0;
             for(Product product : saveGoods){
                 if(product.getGoodsName().contains(name)){
                     System.out.println(product.getInfor());
+                }else{
+                    number++;
+                }
+                if(number==saveGoods.size()){
+                    System.out.println("There is no product name");
                 }
             }
 
