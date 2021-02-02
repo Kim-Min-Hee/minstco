@@ -159,8 +159,7 @@ public class Minstco {
                             break;
 
                         case 3 :
-                            System.out.println(loginUser.loginInformation().getDiscountRate());
-                            merchandise.selectProduct(loginUser.loginInformation().getDiscountRate(),loginConsumer.getId(),loginConsumer.getGrade());
+                            merchandise.buyProduct(loginConsumer.getId(),loginConsumer.getGrade(),loginConsumer.getDiscountRate());
 
                             break;
 

@@ -44,7 +44,7 @@ public class Merchandise {
 
     }
 
-    public void selectProduct(double discountRate, String id, char loginGrade){
+    public void buyProduct(String id,char grade ,double discountRate){
         System.out.println(discountRate);
         for(Product product : saveGoods){
             System.out.println(product.getInfor());
@@ -59,30 +59,18 @@ public class Merchandise {
                 int discount=0;
                 int pay=0;
                 int total=0;
-                char grade = 0;
                 for(BuyProduct buyProduct : buy){
                     System.out.println(buyProduct.getBuyInfor());
                     total += buyProduct.getBuyTotal();
                     discount = (int)(discountRate*total);
                     pay = total-discount;
                 }
-                System.out.println("Total : "+total+"discount : "+discount+"payment : "+pay);
-                
-                if(total>=500000 && loginGrade != 'A'){
-                    grade='A';
-                    discountRate = 0.1;
-                    System.out.println("Membership level has been changed"+"\n"+loginGrade+"->"+grade);
-                }else if(total >300000 && total<500000 && loginGrade != 'B'){
-                    grade = 'B';
-                    discountRate=0.05;
-                    System.out.println("Membership level has been changed"+"\n"+loginGrade+"->"+grade);
-                }
-
-                registration.productPurchaseRecord(id,total,discount,grade,discountRate);
-
+                System.out.println("Total : "+total +"discount : "+discount+"payment : "+pay);
+                registration.productPurchaseRecord(id,grade,total,discount,discountRate);
                 buy.clear();
                 break;
-            }
+                }
+
             int count=0;
 
             for(Product product : saveGoods){
@@ -118,10 +106,13 @@ public class Merchandise {
     }
 
     public void insertProduct(){
+       for(Product product : saveGoods){
 
+       }
         Scanner scanner = new Scanner(System.in);
         System.out.println("write goodsCategory");
         String goodsCategory = scanner.nextLine();
+
         System.out.println("write goodsCode");
         String goodsCode = scanner.nextLine();
         System.out.println("write goodsName");

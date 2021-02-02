@@ -571,39 +571,36 @@ public class Registration {
     }
 
 
-    public void productPurchaseRecord(String id,int total, double discountedAmount,char loginGrade , double loginDiscountRate) {
+    public void productPurchaseRecord(String loginId, char loginGrade, int loginTotal , int loginDiscount , double loginDiscountRate) {
+
+        if(loginTotal >=500000 && loginGrade != 'A'){
+            loginGrade = 'A';
+            loginDiscountRate = 0.1;
+        }else if(loginTotal >300000 && loginTotal <500000 && loginGrade != 'B'){
+            loginGrade = 'B';
+            loginDiscountRate = 0.05;
+        }
         for(int i=0 ; i<profile.size();i++){
             Member member = profile.get(i);
 
-            if(member.getId().equals(id)){
+            if(member.getId().equals(loginId)){
                 String password = member.getPassword();
                 String name = member.getName();
                 String email = member.getEmail();
                 String phone = member.getPhoneNumber();
                 String gender = member.getGender();
-                char grade = loginGrade;
-                double discountRate = loginDiscountRate;
-                int sum = member.getTotal() + total;
-                int discount = (int) (member.getDiscount() + discountedAmount);
-//                if(sum>=500000 && grade != 'A'){
-//                    grade='A';
-//                    discountRate = 0.1;
-//                    System.out.println("Membership level has been changed"+"\n"+member.getGrade()+"->"+grade);
-//                }else if(sum >300000 && sum<500000 && grade != 'B'){
-//                    grade = 'B';
-//                    discountRate=0.05;
-//                    System.out.println("Membership level has been changed"+"\n"+member.getGrade()+"->"+grade);
-//                }
+                int sum = member.getTotal() + loginTotal;
+                int discount = (int) (member.getDiscount() + loginDiscount);
 
-                Member member1 = new Member(id, password, name, email, phone, gender, grade,discountRate, sum, discount);
-                User user = new User(id, password, name, email, phone, gender, grade,discountRate, sum, discount);
+                Member member1 = new Member(member.getId(),password,name,email,phone,gender,loginGrade,loginDiscountRate,sum,discount);
+                User user = new User(member.getId(), password, name, email, phone, gender, loginGrade,loginDiscountRate,sum,discount);
                 profile.add(member1);
                 profile.remove(member);
                 System.out.println("Thank you for using");
-                loginUser.login(user);
-                return;
-            }
 
+                break;
+
+            }
         }
 
     }
