@@ -106,19 +106,40 @@ public class Merchandise {
     }
 
     public void insertProduct(){
-       for(Product product : saveGoods){
+        ArrayList<String> category = new ArrayList<String>();
 
-       }
+        for(Product product : saveGoods){
+            String categoryType = product.getGoodsCategory();
+
+            if(!category.contains(categoryType)){
+                category.add(categoryType);
+            }
+        }
+
+        for (String value : category){
+            System.out.println("Current category : "+value);
+        }
         Scanner scanner = new Scanner(System.in);
         System.out.println("write goodsCategory");
         String goodsCategory = scanner.nextLine();
 
-        System.out.println("write goodsCode");
-        String goodsCode = scanner.nextLine();
+        int count=1;
+        for(Product product :saveGoods){
+            if(product.getGoodsCategory().equals(goodsCategory)){
+                count++;
+            }
+        }
+        String number = String.valueOf(count);
+        String goodsCode = goodsCategory.charAt(0)+number;
+        goodsCode = goodsCode.toUpperCase();
+        System.out.println(goodsCode);
+
         System.out.println("write goodsName");
         String goodsName = scanner.nextLine();
+
         System.out.println("write goodsPrice");
         int goodsPrice = scanner.nextInt();
+
         System.out.println("write goodsQuantity");
         int goodsQuantity = scanner.nextInt();
 
