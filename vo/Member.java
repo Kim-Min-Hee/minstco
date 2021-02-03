@@ -121,7 +121,7 @@ public String getInfo(){
         this.discount = discount;
     }
 
-    public void setDiscountRate(char grade) {
+    public void setDiscountRate(double discountRate) {
        this.discountRate = discountRate;
     }
 }

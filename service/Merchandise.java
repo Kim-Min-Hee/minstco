@@ -3,21 +3,18 @@ package service;
 import vo.BuyProduct;
 import vo.Member;
 import vo.Product;
+import vo.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
-public class Merchandise {
+public class Merchandise  {
     private static final char[] Merchadise= null;
     private static final String Product = null;
     public ArrayList<Product> saveGoods = new ArrayList<Product>();
     public ArrayList<BuyProduct>buy = new ArrayList<BuyProduct>();
     Scanner scanner = new Scanner(System.in);
-    LoginStatus loginStatus = new LoginStatus();
-    Registration registration = new Registration();
+//    LoginStatus loginStatus = new LoginStatus();
 
     public Merchandise() {
         Product goods1 = new Product("food", "F1", "goraebab", 1200, 100);
@@ -44,8 +41,7 @@ public class Merchandise {
 
     }
 
-    public void buyProduct(String id,char grade ,double discountRate){
-        System.out.println(discountRate);
+    public void buyProduct(User consumer,Registration registration) {
         for(Product product : saveGoods){
             System.out.println(product.getInfor());
         }
@@ -62,11 +58,33 @@ public class Merchandise {
                 for(BuyProduct buyProduct : buy){
                     System.out.println(buyProduct.getBuyInfor());
                     total += buyProduct.getBuyTotal();
-                    discount = (int)(discountRate*total);
+                    discount = (int)(consumer.getDiscountRate()*total);
                     pay = total-discount;
                 }
                 System.out.println("Total : "+total +"discount : "+discount+"payment : "+pay);
-                registration.productPurchaseRecord(id,grade,total,discount,discountRate);
+
+                if(total >=500000 && consumer.getGrade() != 'A'){
+                    consumer.setGrade('A');
+                    consumer.setDiscountRate(0.1);
+                }else if(total >300000 && total <500000 && consumer.getGrade() != 'B'){
+                    consumer.setGrade('B');
+                    consumer.setDiscountRate(0.05);
+                }
+
+                for(int i = 0; i<registration.profile.size(); i++){
+                    Member member = registration.profile.get(i);
+                    if(member.getId().equals(consumer.getId())){
+                        Member member1 = new Member(consumer.getId(),consumer.getPassword(),consumer.getName(),consumer.getEmail(),consumer.getPhoneNumber(),
+                                consumer.getGender(),consumer.getGrade(),consumer.getDiscountRate(),total,discount);
+                        User user = new User(consumer.getId(),consumer.getPassword(),consumer.getName(),consumer.getEmail(),consumer.getPhoneNumber(),
+                                consumer.getGender(),consumer.getGrade(),consumer.getDiscountRate(),total,discount);
+                        registration.profile.add(member1);
+                        registration.profile.remove(member);
+                        break;
+                    }
+
+                }
+
                 buy.clear();
                 break;
                 }
@@ -132,7 +150,7 @@ public class Merchandise {
         String number = String.valueOf(count);
         String goodsCode = goodsCategory.charAt(0)+number;
         goodsCode = goodsCode.toUpperCase();
-        System.out.println(goodsCode);
+        System.out.println("Given code : "+goodsCode);
 
         System.out.println("write goodsName");
         String goodsName = scanner.nextLine();
@@ -169,6 +187,7 @@ public class Merchandise {
             System.out.println("search product by category");
             scanner.nextLine();
             String category = scanner.nextLine();
+            category = category.toLowerCase();
             int count=0;
             for(Product product : saveGoods){
                 if(product.getGoodsCategory().contains(category)){
@@ -221,16 +240,17 @@ public class Merchandise {
                     Product product = saveGoods.get(i);
 
                     if (product.getGoodsCode().equals(code)) {
+                        System.out.println(product.getInfor());
                         System.out.println("Which part do you want to edit " + "\n" + "1. goodsName 2. goodsQuantity 3. goodsPrice");
                         int choose = scanner.nextInt();
 
                         if (choose == 1) {
                             System.out.println("Please write the name to change");
                             scanner.nextLine();
-                            String name = scanner.nextLine();
+                            String goodsName = scanner.nextLine();
+                            goodsName = goodsName.toLowerCase();
                             String goodsCategory = product.getGoodsCategory();
                             String goodsCode = product.getGoodsCode();
-                            String goodsName = name;
                             int goodsPrice = product.getGoodsPrice();
                             int goodsQuantity = product.getGoodsQuantity();
                             Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
@@ -240,13 +260,12 @@ public class Merchandise {
 
                         } else if (choose == 2) {
                             System.out.println("Please write the quantity to change");
-                            int quantity = scanner.nextInt();
+                            int goodsQuantity = scanner.nextInt();
 
                             String goodsCategory = product.getGoodsCategory();
                             String goodsCode = product.getGoodsCode();
                             String goodsName = product.getGoodsName();
                             int goodsPrice = product.getGoodsPrice();
-                            int goodsQuantity = quantity;
                             Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
                             saveGoods.add(changeProduct);
                             saveGoods.remove(product);
@@ -254,12 +273,11 @@ public class Merchandise {
 
                         }else if(choose==3){
                             System.out.println("Please write the price to change");
-                            int price = scanner.nextInt();
+                            int goodsPrice = scanner.nextInt();
 
                             String goodsCategory = product.getGoodsCategory();
                             String goodsCode = product.getGoodsCode();
                             String goodsName = product.getGoodsName();
-                            int goodsPrice = price;
                             int goodsQuantity = product.getGoodsQuantity();
                             Product changeProduct = new Product(goodsCategory, goodsCode, goodsName, goodsPrice, goodsQuantity);
                             saveGoods.add(changeProduct);

@@ -22,6 +22,7 @@ public class LoginStatus {
         }
         System.out.println("login Ok");
         System.out.println("welcome "+"\t"+consumer.getId());
+        System.out.println(consumer.UserInfo());
         this.consumer = consumer;
     }
 
