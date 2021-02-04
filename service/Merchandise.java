@@ -14,7 +14,6 @@ public class Merchandise  {
     public ArrayList<Product> saveGoods = new ArrayList<Product>();
     public ArrayList<BuyProduct>buy = new ArrayList<BuyProduct>();
     Scanner scanner = new Scanner(System.in);
-//    LoginStatus loginStatus = new LoginStatus();
 
     public Merchandise() {
         Product goods1 = new Product("food", "F1", "goraebab", 1200, 100);
@@ -298,7 +297,8 @@ public class Merchandise  {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter the product code you want to delete");
             String code = scanner.nextLine();
-
+            code = code.toUpperCase();
+            int count=0;
             for(int i=0; i<saveGoods.size();i++) {
                 Product product = saveGoods.get(i);
                 if(product.getGoodsCode().equals(code)){
@@ -318,6 +318,11 @@ public class Merchandise  {
                             System.out.println("Incorrect password");
                             return;
                         }
+                    }
+                }else{
+                    count++;
+                    if(count==saveGoods.size()){
+                        System.out.println("The code you entered does not exist");
                     }
                 }
 

@@ -55,7 +55,7 @@ public class Minstco {
                                     String userPhoneNumber = m.getPhoneNumber();
                                     String userGender = m.getGender();
                                     char userGrade = m.getGrade();
-                                    double userDiscountRate = m.getDiscountRate();
+                                    double userDiscountRate = 0;
                                     int userTotal = m.getTotal();
                                     int userDiscount= m.getDiscount();
 
@@ -104,10 +104,7 @@ public class Minstco {
                             if(select==1){
                                 registration.selectMember();
                             }else if(select==2){
-                                System.out.println("Write down the ID you want to edit");
-                                scanner.nextLine();
-                                String editId = scanner.nextLine();
-                                registration.informationModification(editId,loginConsumer.getPassword());
+                                registration.informationModification(loginConsumer);
                             }else{
                                 System.out.println("Wrong choice");
                             }

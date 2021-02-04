@@ -15,7 +15,7 @@ public class Member {
 
 
 
-    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade ,double discountRate,
+    public Member(String id , String password, String name , String email, String phoneNumber , String gender, char grade , double discountRate,
                   int total, int discount){
     this.id = id;
     this.password = password;
@@ -29,12 +29,12 @@ public class Member {
     this.discount= discount;
 
     System.out.println("member : "+"id : "+id+"\t"+"password : "+password+"\t"+"name : "+name+"\t"+"email : "+email+
-            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t" +"discountRate : "+discountRate+
+            "\t"+"phoneNumber : "+phoneNumber+"\t"+"gender : "+gender+"\t"+"grade : "+grade+"\t" + "discountRate : "+discountRate+
             "total : "+total+"\t"+"discount : "+discount);
 }
 public String getInfo(){
     return "member infomation  "+"id : "+id+"\t"+"name : "+name+"\t"+"email : "+email+"\t"+"phoneNumber : "+phoneNumber+"\t"+
-            "gender : "+gender+"\t"+"grade : "+ grade+"\t"+"discountRate : "+discountRate+"total : "+total;
+            "gender : "+gender+"\t"+"grade : "+ grade+"\t"+"discountRate : "+discountRate+"\t"+"total : "+total;
 }
 
     public int getDiscount() {
