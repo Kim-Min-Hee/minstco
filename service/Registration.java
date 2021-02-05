@@ -37,120 +37,163 @@ public class Registration {
         profile.add(m4);
     }
 
-//    private double discountRate(char grade){
+//    private static double discountRate(ArrayList<Member>profile){
 //        double rate = 0;
-//            if(grade =='A'){
-//                rate = 0.1;
-//            }else if(grade =='B'){
-//                rate = 0.05;
-//            }else if(grade =='C'){
-//                rate =0.03;
+//        for(int i=0; i<profile.size();i++){
+//            Member member= profile.get(i);
+//            if(member.getGrade() =='A'){
+//                rate = 0.2;
+//            }else if(member.getGrade() =='B'){
+//                rate = 0.06;
+//            }else if(member.getGrade() =='C'){
+//                rate =0.04;
 //            }else{
 //                rate =0;
 //            }
-//
+//        }
 //        return rate;
 //
 //    }
 
 
     public void insertMember() {
-
         String id = null;
-        int i = 0;
-
-        System.out.println("please enter id to use");
-        while (i < 3) {
-            id = scanner.nextLine();
-            int userId = 0;
-            for (Member member : profile) {
-                if (member.getId().equals(id)) {
-                    if (i == 2) {
-                        System.out.println("you can not join ");
-                        return;
-                    }
-                    System.out.println("enter another Id");
-                    break;
-                } else {
-                    userId++;
-                }
-                if (userId == profile.size()) {
-                    System.out.println("you can use the ID");
-                    i = 2;
-                    break;
-                }
-            }
-            i++;
-        }
-        System.out.println("enter password to use");
-        String password = scanner.nextLine();
-
-        System.out.println("enter your name");
-        String name = scanner.nextLine();
-        String pattern = "^[ㄱ-ㅎ가-힣a-zA-Z0-9]*$";
-        boolean result = Pattern.matches(pattern, name);
-        if (result == false) {
-            System.out.println("Special characters cannot be entered in the name");
-            return;
-        }
-
-
+        String password = null;
+        String name = null;
         String email = null;
-        for (int y = 0; y < 3; ) {
-            System.out.println("enter your email");
-            email = scanner.nextLine();
-            boolean verify = email.contains("@") && email.contains(".");
-            if (!verify) {
-                System.out.println("Email format is not correct");
-
-            } else {
-                int count = 0;
-                for (Member member : profile) {
-                    if (member.getEmail().equals(email)) {
-                        System.out.println("This email is already in use");
-                        break;
-
-                    } else {
-                        count++;
-                    }
-                    if (count == profile.size()) {
-                        y = 3;
-                        System.out.println("you can use the email");
-                        break;
-                    }
-                }
-            }
-            if (y == 2) {
-                System.out.println("you can not join");
-                return;
-            }
-            y++;
-        }
         String phoneNumber = null;
-        for (int a = 0; a < 3; ) {
-            System.out.println("enter phoneNumber to use");
-            phoneNumber = scanner.nextLine();
-            if (phoneNumber.length() < 10 || phoneNumber.length() >= 12) {
-                System.out.println("The length of the mobile phone number is not correct");
-                if (a == 2) {
-                    System.out.println("check your phoneNumber");
-                    return;
+        String gender = null;
+        char grade = 0;
+        for(int i=0; i<7 ;){
+            boolean check = false;
+            switch (i){
+                case 1 :
+                System.out.println("write id to use");
+                id = scanner.nextLine();
+                if(id.length()>5 && id.length()<20){
+                    check = true;
                 }
-                a++;
-            } else {
-                a = 3;
                 break;
+                case 2 :
+                System.out.println("write password to use");
+                password = scanner.nextLine();
+
+                break;
+
+            }
+            if(check = true){
+                Member member = new Member(id,password,name , email, phoneNumber , gender , grade , 0.03 , 0,0);
+                i++;
             }
         }
 
-        System.out.println("write woman or  man" + "\t" + "If it’s a man, M " + "\t" +
-                "If it's a woman, F");
-        String gender = scanner.nextLine();
-        gender = gender.toUpperCase();
 
 
-        Member member = new Member(id, password, name, email, phoneNumber, gender, 'C', 0.03, 0, 0);
-        profile.add(member);
+
+
+
+
+
+
+
+
+
+
+//        String id = null;
+//        int i = 0;
+//
+//        System.out.println("please enter id to use");
+//        while (i < 3) {
+//            id = scanner.nextLine();
+//            int userId = 0;
+//            for (Member member : profile) {
+//                if (member.getId().equals(id)) {
+//                    if (i == 2) {
+//                        System.out.println("you can not join ");
+//                        return;
+//                    }
+//                    System.out.println("enter another Id");
+//                    break;
+//                } else {
+//                    userId++;
+//                }
+//                if (userId == profile.size()) {
+//                    System.out.println("you can use the ID");
+//                    i = 2;
+//                    break;
+//                }
+//            }
+//            i++;
+//        }
+//        System.out.println("enter password to use");
+//        String password = scanner.nextLine();
+//
+//        System.out.println("enter your name");
+//        String name = scanner.nextLine();
+//        String pattern = "^[ㄱ-ㅎ가-힣a-zA-Z0-9]*$";
+//        boolean result = Pattern.matches(pattern, name);
+//        if (result == false) {
+//            System.out.println("Special characters cannot be entered in the name");
+//            return;
+//        }
+//
+//
+//        String email = null;
+//        for (int y = 0; y < 3; ) {
+//            System.out.println("enter your email");
+//            email = scanner.nextLine();
+//            boolean verify = email.contains("@") && email.contains(".");
+//            if (!verify) {
+//                System.out.println("Email format is not correct");
+//
+//            } else {
+//                int count = 0;
+//                for (Member member : profile) {
+//                    if (member.getEmail().equals(email)) {
+//                        System.out.println("This email is already in use");
+//                        break;
+//
+//                    } else {
+//                        count++;
+//                    }
+//                    if (count == profile.size()) {
+//                        y = 3;
+//                        System.out.println("you can use the email");
+//                        break;
+//                    }
+//                }
+//            }
+//            if (y == 2) {
+//                System.out.println("you can not join");
+//                return;
+//            }
+//            y++;
+//        }
+//        String phoneNumber = null;
+//        for (int a = 0; a < 3; ) {
+//            System.out.println("enter phoneNumber to use");
+//            phoneNumber = scanner.nextLine();
+//            if (phoneNumber.length() < 10 || phoneNumber.length() >= 12) {
+//                System.out.println("The length of the mobile phone number is not correct");
+//                if (a == 2) {
+//                    System.out.println("check your phoneNumber");
+//                    return;
+//                }
+//                a++;
+//            } else {
+//                a = 3;
+//                break;
+//            }
+//        }
+//
+//        System.out.println("write woman or  man" + "\t" + "If it’s a man, M " + "\t" +
+//                "If it's a woman, F");
+//        String gender = scanner.nextLine();
+//        gender = gender.toUpperCase();
+//
+//
+//        Member member = new Member(id, password, name, email, phoneNumber, gender, 'C', 0.03, 0, 0);
+//        profile.add(member);
 
 
     }
@@ -511,7 +554,6 @@ public class Registration {
                     change = change.toUpperCase();
                     char grade = change.charAt(0);
 
-                    System.out.println(grade);
                     for(char value : gradeType){
                         System.out.println(value);
                         if(value == grade){
